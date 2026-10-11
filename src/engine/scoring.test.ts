@@ -84,6 +84,11 @@ describe('rankActivities', () => {
     expect(rankActivities(content, a, 'skills', ['skills', 'industry'])[0].id).toBe('startup-coller')
   })
 
+  it('leaves out activities already picked under the other goal', () => {
+    const list = rankActivities(content, emptyAnswers(), 'network', ['industry', 'network'], ['clubs'])
+    expect(list.map((a) => a.id)).not.toContain('clubs')
+  })
+
   it('prefers activities that serve both chosen goals', () => {
     const [first] = rankActivities(content, emptyAnswers(), 'industry', ['industry', 'network'])
     expect(first.domains).toEqual(expect.arrayContaining(['industry', 'network']))

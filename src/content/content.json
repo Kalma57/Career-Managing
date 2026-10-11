@@ -1,6 +1,6 @@
 {
   "texts": {
-    "introTitle": "שלום, וברוכות וברוכים הבאים ל-MBA",
+    "introTitle": "שלום, וברוכות וברוכים הבאים ל‑MBA",
     "introBody": [
       "תקופת הלימודים היא הרבה יותר מקורסים, ציונים ותואר. זו הזדמנות לבנות לעצמך מאגר משאבים לקריירה: ידע, מיומנויות, ניסיון, קשרים והיכרות טובה יותר עם עצמך.",
       "בכמה דקות נגדיר יחד שתי מטרות לתקופת הלימודים, ונמצא פעילויות בפקולטה שיעזרו לך לממש אותן."
@@ -91,7 +91,7 @@
           "options": [
             { "id": "dev", "label": "פיתוח תוכנה / הנדסה", "group": "tech" },
             { "id": "product", "label": "ניהול מוצר", "group": "tech" },
-            { "id": "data", "label": "דאטה / BI / AI", "group": "tech" },
+            { "id": "data", "label": "דאטה ובינה מלאכותית", "group": "tech" },
             { "id": "cyber", "label": "סייבר", "group": "tech" },
             { "id": "finance", "label": "פיננסים / בנקאות / השקעות", "group": "business" },
             { "id": "insurance", "label": "ביטוח", "group": "business" },
@@ -136,7 +136,7 @@
         {
           "id": "direction",
           "type": "single",
-          "title": "לאן היית רוצה שה-MBA ייקח אותך?",
+          "title": "לאן היית רוצה שה‑MBA ייקח אותך?",
           "allowOther": true,
           "options": [
             { "id": "grow", "label": "להתקדם לתפקיד בכיר בתחום שלי", "weights": { "skills": 2, "network": 1 } },

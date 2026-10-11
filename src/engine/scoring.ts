@@ -110,13 +110,15 @@ export function rankActivities(
   answers: Answers,
   goal: DomainId,
   chosenGoals: DomainId[],
+  /** Activity ids already picked under the other goal. */
+  exclude: string[] = [],
 ): Activity[] {
   const limit = LOAD_ORDER.indexOf(maxLoad(content, answers))
   const score = (a: Activity) =>
     chosenGoals.filter((g) => a.domains.includes(g)).length + boostPoints(a, answers)
 
   return content.activities
-    .filter((a) => a.domains.includes(goal) && LOAD_ORDER.indexOf(a.load) <= limit)
+    .filter((a) => a.domains.includes(goal) && LOAD_ORDER.indexOf(a.load) <= limit && !exclude.includes(a.id))
     .map((a, index) => ({ a, index, s: score(a) }))
     .sort((x, y) => y.s - x.s || x.index - y.index)
     .slice(0, ACTIVITIES_PER_GOAL)
