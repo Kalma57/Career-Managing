@@ -26,7 +26,7 @@ function App() {
   const [numbers, setNumbers] = useState<Record<string, number>>({})
 
   const recommended = useMemo(
-    () => rankDomains(content, scoreDomains(content, answers)).slice(0, 2),
+    () => rankDomains(content, scoreDomains(content, answers), answers).slice(0, 2),
     [answers],
   )
 

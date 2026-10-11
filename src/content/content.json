@@ -142,7 +142,7 @@
             { "id": "grow", "label": "להתקדם לתפקיד בכיר בתחום שלי", "weights": { "skills": 2, "network": 1 } },
             { "id": "switch", "label": "לעבור לתחום או תעשייה אחרים", "weights": { "industry": 2, "network": 2 } },
             { "id": "startup", "label": "להקים מיזם משלי", "weights": { "skills": 1, "industry": 1, "network": 1 } },
-            { "id": "unsure", "label": "עוד לא יודע/ת, וזה בסדר", "weights": { "self": 3, "industry": 1 } }
+            { "id": "unsure", "label": "עוד לא יודע/ת, וזה בסדר", "weights": { "self": 2, "industry": 1 } }
           ]
         }
       ]
@@ -186,6 +186,8 @@
       ]
     }
   ],
+
+  "tieBreak": ["missing", "direction"],
 
   "groupWeights": {
     "workField": {

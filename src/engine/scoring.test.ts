@@ -16,7 +16,14 @@ function answers(choices: Answers['choices']): Answers {
   return { ...emptyAnswers(), choices }
 }
 
-const top2 = (a: Answers) => rankDomains(content, scoreDomains(content, a)).slice(0, 2)
+const top2 = (a: Answers) => rankDomains(content, scoreDomains(content, a), a).slice(0, 2)
+
+const directions = ['grow', 'switch', 'startup', 'unsure']
+const lacks = ['self', 'skills', 'industry', 'network']
+const lackCombos = [
+  ...lacks.map((x) => [x]),
+  ...lacks.flatMap((x, i) => lacks.slice(i + 1).map((y) => [x, y])),
+]
 
 describe('scoreDomains', () => {
   it('recommends industry and network to a career switcher', () => {
@@ -36,6 +43,23 @@ describe('scoreDomains', () => {
   it('lets the "missing" answers outweigh the direction', () => {
     const a = answers({ direction: ['grow'], missing: ['self', 'industry'] })
     expect(top2(a).sort()).toEqual(['industry', 'self'])
+  })
+
+  it('always recommends what the student said is missing, for every answer combination', () => {
+    for (const direction of directions) {
+      for (const missing of lackCombos) {
+        for (const workField of ['dev', 'none']) {
+          const top = top2(answers({ direction: [direction], missing, workField: [workField] }))
+          expect(top, `${direction} | ${missing} | ${workField}`).toEqual(expect.arrayContaining(missing))
+        }
+      }
+    }
+  })
+
+  it('breaks ties by explicit answers before the fixed domain order', () => {
+    // grow: skills 2, network 1. Not working: industry 1. Network and industry tie at 1;
+    // network's point came from "direction", so it wins over industry's background point.
+    expect(top2(answers({ direction: ['grow'], workField: ['none'] }))).toEqual(['skills', 'network'])
   })
 
   it('adds AI weights, capped', () => {

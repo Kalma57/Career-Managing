@@ -98,6 +98,8 @@ export interface Content {
   texts: Texts
   domains: Domain[]
   screens: Screen[]
+  /** Question ids whose points decide ties between domains, most decisive first. */
+  tieBreak: string[]
   /** Points per background group, keyed by question id then group id. */
   groupWeights: Record<string, Record<string, Weights>>
   activities: Activity[]

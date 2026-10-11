@@ -62,10 +62,16 @@ export function capAiWeights(weights: Weights): Weights {
   return clean
 }
 
-export function scoreDomains(content: Content, answers: Answers, aiWeights: Weights = {}): Scores {
-  const scores = Object.fromEntries(content.domains.map((d) => [d.id, 0])) as Scores
+function zeroScores(content: Content): Scores {
+  return Object.fromEntries(content.domains.map((d) => [d.id, 0])) as Scores
+}
+
+/** Points from the student's answers to the given questions only (all questions when omitted). */
+function answerPoints(content: Content, answers: Answers, questionIds?: string[]): Scores {
+  const scores = zeroScores(content)
 
   for (const question of choiceQuestions(content)) {
+    if (questionIds && !questionIds.includes(question.id)) continue
     const picked = answers.choices[question.id] ?? []
     for (const option of question.options.filter((o) => picked.includes(o.id))) {
       addWeights(scores, option.weights)
@@ -73,13 +79,31 @@ export function scoreDomains(content: Content, answers: Answers, aiWeights: Weig
     }
   }
 
+  return scores
+}
+
+export function scoreDomains(content: Content, answers: Answers, aiWeights: Weights = {}): Scores {
+  const scores = answerPoints(content, answers)
   addWeights(scores, capAiWeights(aiWeights))
   return scores
 }
 
-/** Domains from highest to lowest score; ties keep the order of content.domains. */
-export function rankDomains(content: Content, scores: Scores): DomainId[] {
-  return content.domains.map((d) => d.id).sort((a, b) => scores[b] - scores[a])
+/**
+ * Domains from highest to lowest score. Ties go to the domain with more points
+ * from the questions in content.tieBreak (what the student said explicitly),
+ * and only then to the order of content.domains.
+ */
+export function rankDomains(content: Content, scores: Scores, answers: Answers): DomainId[] {
+  const tieBreakers = content.tieBreak.map((id) => answerPoints(content, answers, [id]))
+  return content.domains
+    .map((d) => d.id)
+    .sort((a, b) => {
+      if (scores[b] !== scores[a]) return scores[b] - scores[a]
+      for (const points of tieBreakers) {
+        if (points[b] !== points[a]) return points[b] - points[a]
+      }
+      return 0
+    })
 }
 
 /** The heaviest activity load this student has time for. */

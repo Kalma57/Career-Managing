@@ -32,6 +32,10 @@ describe('content.json', () => {
     }
   })
 
+  it('breaks ties only by real choice questions', () => {
+    for (const id of content.tieBreak) expect(choiceQuestions.map((q) => q.id)).toContain(id)
+  })
+
   it('points group weights at real questions and groups', () => {
     for (const [questionId, groups] of Object.entries(content.groupWeights)) {
       const q = choiceQuestions.find((x) => x.id === questionId)
