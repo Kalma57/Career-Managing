@@ -1,0 +1,65 @@
+import type { Content, DomainId, Weights } from '../content/types'
+import type { Answers } from './scoring'
+
+export interface AiResult {
+  weights: Weights
+  phrases: Partial<Record<DomainId, string>>
+}
+
+/** How long the student waits for the AI before we continue without it. */
+export const AI_TIMEOUT_MS = 6000
+
+const DOMAINS: DomainId[] = ['self', 'skills', 'industry', 'network']
+
+/** Everything the student wrote in their own words: "other" fields and the open question. */
+export function studentText(answers: Answers): string {
+  return [...Object.values(answers.other), answers.freeText]
+    .map((t) => t.trim())
+    .filter(Boolean)
+    .join('\n')
+}
+
+/** The AI is only worth calling when the student wrote something. */
+export function needsAi(answers: Answers): boolean {
+  return studentText(answers) !== ''
+}
+
+/** The structured answers as readable question/answer pairs, for context. */
+export function buildProfile(content: Content, answers: Answers) {
+  return content.screens.flatMap((screen) =>
+    screen.questions.flatMap((q) => {
+      if (q.type === 'text') return []
+      const picked = answers.choices[q.id] ?? []
+      const labels = q.options.filter((o) => picked.includes(o.id)).map((o) => o.label)
+      return labels.length ? [{ question: q.title, answer: labels.join(', ') }] : []
+    }),
+  )
+}
+
+function parse(raw: unknown): AiResult | null {
+  if (!raw || typeof raw !== 'object') return null
+  const { weights, phrases } = raw as { weights?: Record<string, unknown>; phrases?: Record<string, unknown> }
+  if (!weights || !phrases) return null
+  const result: AiResult = { weights: {}, phrases: {} }
+  for (const d of DOMAINS) {
+    if (typeof weights[d] === 'number') result.weights[d] = weights[d]
+    if (typeof phrases[d] === 'string' && phrases[d]) result.phrases[d] = phrases[d]
+  }
+  return result
+}
+
+/** Asks /api/analyze for extra points and personal phrases; null on any failure or timeout. */
+export async function fetchAi(content: Content, answers: Answers, fetchImpl: typeof fetch = fetch): Promise<AiResult | null> {
+  try {
+    const response = await fetchImpl('/api/analyze', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ profile: buildProfile(content, answers), freeText: studentText(answers) }),
+      signal: AbortSignal.timeout(AI_TIMEOUT_MS),
+    })
+    if (!response.ok) return null
+    return parse(await response.json())
+  } catch {
+    return null
+  }
+}

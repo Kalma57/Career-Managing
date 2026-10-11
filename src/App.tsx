@@ -1,6 +1,7 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { content } from './content'
 import type { DomainId } from './content/types'
+import { type AiResult, fetchAi, needsAi } from './engine/ai'
 import { emptyAnswers, rankActivities, rankDomains, scoreDomains, type Answers } from './engine/scoring'
 import { ActivitiesScreen } from './screens/ActivitiesScreen'
 import { GoalsScreen } from './screens/GoalsScreen'
@@ -11,6 +12,7 @@ import { QuestionScreen } from './screens/QuestionScreen'
 type Step =
   | { kind: 'intro' }
   | { kind: 'question'; index: number }
+  | { kind: 'loading' }
   | { kind: 'goals' }
   | { kind: 'activities'; goalIndex: number }
   | { kind: 'plan' }
@@ -25,17 +27,25 @@ function App() {
   const [activities, setActivities] = useState(emptyActivities)
   const [numbers, setNumbers] = useState<Record<string, number>>({})
 
-  const recommended = useMemo(
-    () => rankDomains(content, scoreDomains(content, answers), answers).slice(0, 2),
-    [answers],
-  )
+  const [ai, setAi] = useState<AiResult | null>(null)
+
+  const recommend = (aiResult: AiResult | null) =>
+    rankDomains(content, scoreDomains(content, answers, aiResult?.weights), answers).slice(0, 2)
+  const recommended = recommend(ai)
 
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [step])
 
-  const toGoals = () => {
-    if (goals.length === 0) setGoals(recommended)
+  // After the last question: ask the AI if the student wrote anything, then show the goals.
+  const finishQuestions = async () => {
+    let aiResult: AiResult | null = null
+    if (needsAi(answers)) {
+      setStep({ kind: 'loading' })
+      aiResult = await fetchAi(content, answers)
+    }
+    setAi(aiResult)
+    if (goals.length === 0) setGoals(recommend(aiResult))
     setStep({ kind: 'goals' })
   }
 
@@ -50,6 +60,7 @@ function App() {
     setGoals([])
     setActivities(emptyActivities())
     setNumbers({})
+    setAi(null)
     setStep({ kind: 'intro' })
   }
 
@@ -70,11 +81,19 @@ function App() {
             total={screens.length}
             answers={answers}
             onChange={setAnswers}
-            onNext={() => (index + 1 < screens.length ? setStep({ kind: 'question', index: index + 1 }) : toGoals())}
+            onNext={() => (index + 1 < screens.length ? setStep({ kind: 'question', index: index + 1 }) : finishQuestions())}
             onBack={() => setStep(index === 0 ? { kind: 'intro' } : { kind: 'question', index: index - 1 })}
           />
         )
       }
+
+      case 'loading':
+        return (
+          <div className="loading" role="status">
+            <div className="spinner" aria-hidden="true" />
+            <p>מכינים לך המלצות…</p>
+          </div>
+        )
 
       case 'goals':
         return (
@@ -112,6 +131,7 @@ function App() {
             goals={goals}
             activities={activities}
             numbers={numbers}
+            phrases={ai?.phrases ?? {}}
             onNumber={(id, n) => setNumbers((prev) => ({ ...prev, [id]: n }))}
             onBack={() => setStep({ kind: 'activities', goalIndex: 1 })}
             onRestart={restart}

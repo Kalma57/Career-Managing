@@ -6,6 +6,8 @@ interface Props {
   goals: DomainId[]
   activities: Record<DomainId, string[]>
   numbers: Record<string, number>
+  /** Personal goal sentences from the AI; the domain description is shown when missing. */
+  phrases: Partial<Record<DomainId, string>>
   onNumber: (activityId: string, n: number) => void
   onBack: () => void
   onRestart: () => void
@@ -14,7 +16,7 @@ interface Props {
 const byId = (id: string) => content.activities.find((a) => a.id === id) as Activity
 const domainById = (id: DomainId) => content.domains.find((d) => d.id === id)!
 
-export function PlanScreen({ goals, activities, numbers, onNumber, onBack, onRestart }: Props) {
+export function PlanScreen({ goals, activities, numbers, phrases, onNumber, onBack, onRestart }: Props) {
   const { texts } = content
   const center = texts.careerCenter
   const numberFor = (a: Activity) => numbers[a.id] ?? a.goal.default
@@ -25,6 +27,7 @@ export function PlanScreen({ goals, activities, numbers, onNumber, onBack, onRes
       ...goals.flatMap((g, i) => [
         '',
         `מטרה ${i + 1}: ${domainById(g).title}`,
+        ...(phrases[g] ? [phrases[g]] : []),
         ...activities[g].map(byId).map((a) => `• ${formatGoal(a.goal, numberFor(a))}`),
       ]),
       '',
@@ -56,7 +59,7 @@ export function PlanScreen({ goals, activities, numbers, onNumber, onBack, onRes
               <div className="card-title">
                 מטרה {i + 1} · {domain.title}
               </div>
-              <div className="muted">{domain.description}</div>
+              {phrases[g] ? <div className="phrase">{phrases[g]}</div> : <div className="muted">{domain.description}</div>}
             </div>
 
             {activities[g].map(byId).map((a) => (
