@@ -55,13 +55,16 @@ export function ChoiceField({ question, picked, other, onPick, onOther, compact 
       )}
 
       {question.allowOther && (
-        <input
-          className="input"
-          value={other}
-          onChange={(e) => onOther(e.target.value)}
-          placeholder="אחר – כתוב/י במילים שלך"
-          maxLength={200}
-        />
+        <label className="other">
+          <span className="other-label">לא מצאת? אפשר להקליד כאן</span>
+          <input
+            className="input other-input"
+            value={other}
+            onChange={(e) => onOther(e.target.value)}
+            placeholder="כתוב/י כאן…"
+            maxLength={200}
+          />
+        </label>
       )}
     </div>
   )

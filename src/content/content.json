@@ -41,18 +41,11 @@
           "options": [
             { "id": "ba", "label": "BA" },
             { "id": "bsc", "label": "BSc" },
-            { "id": "beng", "label": "B.Eng" },
             { "id": "llb", "label": "LLB" },
-            { "id": "bed", "label": "B.Ed" },
-            { "id": "bdes", "label": "B.Des / BFA" },
-            { "id": "bsw", "label": "BSW" },
-            { "id": "health", "label": "BN / מקצועות בריאות" },
-            { "id": "md", "label": "MD / DMD" },
             { "id": "ma", "label": "MA" },
             { "id": "msc", "label": "MSc" },
-            { "id": "llm", "label": "LLM" },
-            { "id": "phd", "label": "PhD" },
-            { "id": "abroad", "label": "תואר מחו\"ל" }
+            { "id": "mba", "label": "MBA" },
+            { "id": "phd", "label": "PhD" }
           ]
         },
         {
@@ -122,6 +115,7 @@
           "id": "workload",
           "type": "single",
           "title": "כמה זמן יש לך מעבר ללימודים?",
+          "allowOther": true,
           "options": [
             { "id": "full", "label": "עובד/ת במשרה מלאה", "maxLoad": "medium" },
             { "id": "part", "label": "עובד/ת במשרה חלקית", "maxLoad": "heavy" },
@@ -174,8 +168,9 @@
           "id": "freeText",
           "type": "text",
           "title": "במילים שלך",
-          "subtitle": "השלם/י את המשפט: בסוף התואר הייתי רוצה ש...",
-          "placeholder": "בסוף התואר הייתי רוצה ש...",
+          "subtitle": "השלם/י את המשפט. אפשר להתחיל מאחת ההצעות או לכתוב חופשי.",
+          "stem": "בסוף התואר הייתי רוצה ש…",
+          "placeholder": "המשך/י את המשפט כאן…",
           "hints": [
             "אכיר לעומק את תחום ",
             "ארגיש בטוח/ה יותר ב",

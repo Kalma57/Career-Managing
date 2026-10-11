@@ -78,9 +78,13 @@ export function QuestionScreen({ screen, index, total, answers, onChange, onNext
 function FreeText({ question, value, onChange }: { question: TextQuestion; value: string; onChange: (v: string) => void }) {
   const textarea = useRef<HTMLTextAreaElement>(null)
 
-  // Insert the sentence starter and put the cursor after it, so the student can keep typing.
-  const insertHint = (hint: string) => {
-    onChange((value ? value.trimEnd() + ' ' : '') + hint)
+  // Starters are only offered while the box is empty, so a student picks at most one.
+  const hintsLocked = value.trim() !== ''
+
+  // Put the starter in the box and the cursor after it, so the student can keep typing.
+  const pickHint = (hint: string) => {
+    if (hintsLocked) return
+    onChange(hint)
     requestAnimationFrame(() => {
       const el = textarea.current
       if (!el) return
@@ -95,21 +99,27 @@ function FreeText({ question, value, onChange }: { question: TextQuestion; value
         <h2>{question.title}</h2>
         {question.subtitle && <p className="muted">{question.subtitle}</p>}
       </div>
+      <p className="stem">{question.stem}</p>
       <div className="chips">
         {question.hints.map((hint) => (
-          <button key={hint} type="button" className="chip" onClick={() => insertHint(hint)}>
+          <button key={hint} type="button" className="chip" disabled={hintsLocked} onClick={() => pickHint(hint)}>
             {hint.trim()}…
           </button>
         ))}
       </div>
       <textarea
         ref={textarea}
-        className="input"
+        className="input other-input"
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={question.placeholder}
         maxLength={600}
       />
+      {hintsLocked && (
+        <button type="button" className="btn-link" style={{ alignSelf: 'flex-start' }} onClick={() => onChange('')}>
+          ניקוי והתחלה מחדש
+        </button>
+      )}
       <p className="muted">{content.texts.privacyNote}</p>
     </>
   )

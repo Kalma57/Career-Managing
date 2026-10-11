@@ -11,12 +11,21 @@ export const AI_TIMEOUT_MS = 6000
 
 const DOMAINS: DomainId[] = ['self', 'skills', 'industry', 'network']
 
-/** Everything the student wrote in their own words: "other" fields and the open question. */
-export function studentText(answers: Answers): string {
-  return [...Object.values(answers.other), answers.freeText]
-    .map((t) => t.trim())
+/**
+ * Everything the student wrote in their own words: "other" fields and the open question.
+ * The open answer continues a sentence, so `stem` (e.g. "בסוף התואר הייתי רוצה ש") is put back in front of it.
+ */
+export function studentText(answers: Answers, stem = ''): string {
+  const open = answers.freeText.trim()
+  return [...Object.values(answers.other).map((t) => t.trim()), open ? stem + open : '']
     .filter(Boolean)
     .join('\n')
+}
+
+/** The open question's sentence stem without the trailing ellipsis. */
+function stemOf(content: Content): string {
+  const question = content.screens.flatMap((s) => s.questions).find((q) => q.type === 'text')
+  return question?.type === 'text' ? question.stem.replace(/[….]+$/, '') : ''
 }
 
 /** The AI is only worth calling when the student wrote something. */
@@ -54,7 +63,7 @@ export async function fetchAi(content: Content, answers: Answers, fetchImpl: typ
     const response = await fetchImpl('/api/analyze', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ profile: buildProfile(content, answers), freeText: studentText(answers) }),
+      body: JSON.stringify({ profile: buildProfile(content, answers), freeText: studentText(answers, stemOf(content)) }),
       signal: AbortSignal.timeout(AI_TIMEOUT_MS),
     })
     if (!response.ok) return null

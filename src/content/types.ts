@@ -41,6 +41,8 @@ export interface ChoiceQuestion extends BaseQuestion {
 
 export interface TextQuestion extends BaseQuestion {
   type: 'text'
+  /** The sentence the student continues, shown large above the text box. */
+  stem: string
   placeholder: string
   /** Sentence starters the student can tap. */
   hints: string[]

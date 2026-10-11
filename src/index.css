@@ -3,9 +3,9 @@
   --accent: #1f3a68;
   --accent-soft: #e8eef8;
   --accent-text: #1f3a68;
-  --text: #1a1a1a;
-  --text-secondary: #5b6170;
-  --border: #d9dde5;
+  --text: #0f1115;
+  --text-secondary: #3a3f4b;
+  --border: #c9ced8;
   --surface: #ffffff;
   --surface-muted: #f5f6f8;
   --danger: #b42318;
@@ -228,6 +228,37 @@ button.card {
 textarea.input {
   min-height: 110px;
   resize: vertical;
+}
+
+/* "Type your own answer" field: stands out on every screen. */
+.other {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.other-label {
+  font-weight: 600;
+  color: var(--accent-text);
+}
+
+.other-input {
+  border: 2px solid var(--accent);
+  padding: 9px 11px;
+}
+
+/* The open question's sentence to continue. */
+.stem {
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--accent-text);
+  line-height: 1.4;
+}
+
+.chip:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
 }
 
 .input:focus {

@@ -24,6 +24,19 @@ describe('studentText', () => {
   it('joins the trimmed "other" fields and the open answer', () => {
     expect(studentText(answers)).toBe('תואר בתיירות\nאכיר אנשים בעולם ההשקעות')
   })
+
+  it('puts the sentence stem back in front of the open answer', () => {
+    expect(studentText({ ...emptyAnswers(), freeText: 'אכיר אנשים' }, 'בסוף התואר הייתי רוצה ש')).toBe(
+      'בסוף התואר הייתי רוצה שאכיר אנשים',
+    )
+  })
+
+  it('sends the full sentence to the server', async () => {
+    const fetchImpl = vi.fn(async () => Response.json({ weights: {}, phrases: {} })) as unknown as typeof fetch
+    await fetchAi(content, { ...emptyAnswers(), freeText: 'אכיר אנשים' }, fetchImpl)
+    const init = (fetchImpl as unknown as ReturnType<typeof vi.fn>).mock.calls[0][1] as RequestInit
+    expect(JSON.parse(String(init.body)).freeText).toBe('בסוף התואר הייתי רוצה שאכיר אנשים')
+  })
 })
 
 describe('buildProfile', () => {
