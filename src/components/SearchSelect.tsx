@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import type { Option } from '../content/types'
+import { useG } from './useGender'
 
 interface Props {
   options: Option[]
@@ -9,6 +10,7 @@ interface Props {
 
 /** Single choice from a long list: type to filter, tap to pick. */
 export function SearchSelect({ options, picked, onPick }: Props) {
+  const g = useG()
   const [query, setQuery] = useState('')
   const [open, setOpen] = useState(false)
   const selected = options.find((o) => picked.includes(o.id))
@@ -17,14 +19,14 @@ export function SearchSelect({ options, picked, onPick }: Props) {
     return (
       <div className="chips">
         <button type="button" className="chip" aria-pressed="true" onClick={() => setOpen(true)}>
-          {selected.label} · שינוי
+          {g(selected.label)} · שינוי
         </button>
       </div>
     )
   }
 
   const q = query.trim()
-  const results = q ? options.filter((o) => o.label.includes(q)) : options
+  const results = q ? options.filter((o) => g(o.label).includes(q)) : options
 
   return (
     <div className="stack">
@@ -32,7 +34,7 @@ export function SearchSelect({ options, picked, onPick }: Props) {
         className="input"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        placeholder="הקלד/י לחיפוש או בחר/י מהרשימה"
+        placeholder={g('{הקלד|הקלידי|הקלד/י} לחיפוש או {בחר|בחרי|בחר/י} מהרשימה')}
       />
       <div className="search-results" role="listbox">
         {results.map((o) => (
@@ -47,10 +49,10 @@ export function SearchSelect({ options, picked, onPick }: Props) {
               setOpen(false)
             }}
           >
-            {o.label}
+            {g(o.label)}
           </button>
         ))}
-        {results.length === 0 && <p className="muted" style={{ padding: '9px 12px' }}>לא נמצא. אפשר לכתוב בשדה "אחר".</p>}
+        {results.length === 0 && <p className="muted" style={{ padding: '9px 12px' }}>לא נמצא. אפשר להקליד בשדה שמתחת.</p>}
       </div>
     </div>
   )

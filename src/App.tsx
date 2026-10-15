@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
+import { GenderContext } from './components/useGender'
 import { content } from './content'
 import type { DomainId } from './content/types'
 import { type AiResult, fetchAi, needsAi } from './engine/ai'
+import type { Gender } from './engine/gender'
 import { emptyAnswers, rankActivities, rankDomains, scoreDomains, type Answers } from './engine/scoring'
 import { ActivitiesScreen } from './screens/ActivitiesScreen'
 import { GoalsScreen } from './screens/GoalsScreen'
@@ -22,6 +24,7 @@ const emptyActivities = () => ({}) as Record<DomainId, string[]>
 
 function App() {
   const [step, setStep] = useState<Step>({ kind: 'intro' })
+  const [gender, setGender] = useState<Gender>('n')
   const [answers, setAnswers] = useState<Answers>(emptyAnswers)
   const [goals, setGoals] = useState<DomainId[]>([])
   const [activities, setActivities] = useState(emptyActivities)
@@ -61,20 +64,30 @@ function App() {
     setActivities(emptyActivities())
     setNumbers({})
     setAi(null)
+    setGender('n')
     setStep({ kind: 'intro' })
   }
 
   return (
-    <main className="app">
-      {renderStep()}
-      <footer className="site-footer">{content.texts.footer}</footer>
-    </main>
+    <GenderContext.Provider value={gender}>
+      <main className="app">
+        {renderStep()}
+        <footer className="site-footer">{content.texts.footer}</footer>
+      </main>
+    </GenderContext.Provider>
   )
 
   function renderStep() {
     switch (step.kind) {
       case 'intro':
-        return <IntroScreen onStart={() => setStep({ kind: 'question', index: 0 })} />
+        return (
+          <IntroScreen
+            onStart={(chosen) => {
+              setGender(chosen)
+              setStep({ kind: 'question', index: 0 })
+            }}
+          />
+        )
 
       case 'question': {
         const { index } = step

@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { useG } from '../components/useGender'
+import { content } from '../content'
 import type { Activity, Domain, Load } from '../content/types'
 
 const LOAD_LABEL: Record<Load, string> = {
@@ -18,6 +20,7 @@ interface Props {
 }
 
 export function ActivitiesScreen({ goal, step, activities, chosen, onChange, onNext, onBack }: Props) {
+  const g = useG()
   const [error, setError] = useState(false)
 
   const toggle = (id: string) => {
@@ -30,23 +33,23 @@ export function ActivitiesScreen({ goal, step, activities, chosen, onChange, onN
     <>
       <p className="eyebrow">מטרה {step} מתוך 2</p>
       <div>
-        <h1>{goal.title}: מה מתאים לך?</h1>
-        <p className="muted">בחר/י 1–2 פעילויות</p>
+        <h1>{g(goal.title)}: מה מתאים לך?</h1>
+        <p className="muted">{g(content.texts.activitiesSubtitle)}</p>
       </div>
 
       <div className="stack">
         {activities.map((a) => (
           <button key={a.id} type="button" className="card" aria-pressed={chosen.includes(a.id)} onClick={() => toggle(a.id)}>
             <div className="card-title">
-              {a.title}
+              {g(a.title)}
               <span className="load">· {LOAD_LABEL[a.load]}</span>
             </div>
-            <div className="muted">{a.description}</div>
+            <div className="muted">{g(a.description)}</div>
           </button>
         ))}
       </div>
 
-      {error && <p className="error">בחר/י לפחות פעילות אחת</p>}
+      {error && <p className="error">{g('{בחר|בחרי|בחר/י} לפחות פעילות אחת')}</p>}
 
       <div className="actions">
         <button type="button" className="btn" onClick={() => (chosen.length > 0 ? onNext() : setError(true))}>

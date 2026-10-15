@@ -1,3 +1,4 @@
+import { useG } from '../components/useGender'
 import { content } from '../content'
 import type { Activity, DomainId } from '../content/types'
 import { formatGoal } from '../engine/scoring'
@@ -17,28 +18,30 @@ const byId = (id: string) => content.activities.find((a) => a.id === id) as Acti
 const domainById = (id: DomainId) => content.domains.find((d) => d.id === id)!
 
 export function PlanScreen({ goals, activities, numbers, phrases, onNumber, onBack, onRestart }: Props) {
+  // Named `t` here because `g` is the goal in the loops below.
+  const t = useG()
   const { texts } = content
   const center = texts.careerCenter
   const numberFor = (a: Activity) => numbers[a.id] ?? a.goal.default
 
   const planText = () =>
     [
-      texts.planTitle,
+      t(texts.planTitle),
       ...goals.flatMap((g, i) => [
         '',
-        `מטרה ${i + 1}: ${domainById(g).title}`,
+        `מטרה ${i + 1}: ${t(domainById(g).title)}`,
         ...(phrases[g] ? [phrases[g]] : []),
-        ...activities[g].map(byId).map((a) => `• ${formatGoal(a.goal, numberFor(a))}`),
+        ...activities[g].map(byId).map((a) => `• ${t(formatGoal(a.goal, numberFor(a)))}`),
       ]),
       '',
-      `${center.name}: ${center.email}`,
+      `${t(center.name)}: ${center.email}`,
     ].join('\n')
 
   const share = async () => {
     const text = planText()
     if (navigator.share) {
       try {
-        await navigator.share({ title: texts.planTitle, text })
+        await navigator.share({ title: t(texts.planTitle), text })
         return
       } catch {
         // Cancelled or unsupported – fall back to WhatsApp.
@@ -49,7 +52,7 @@ export function PlanScreen({ goals, activities, numbers, phrases, onNumber, onBa
 
   return (
     <>
-      <h1>{texts.planTitle}</h1>
+      <h1>{t(texts.planTitle)}</h1>
 
       {goals.map((g, i) => {
         const domain = domainById(g)
@@ -57,9 +60,9 @@ export function PlanScreen({ goals, activities, numbers, phrases, onNumber, onBa
           <section key={g} className="plan-goal">
             <div>
               <div className="card-title">
-                מטרה {i + 1} · {domain.title}
+                מטרה {i + 1} · {t(domain.title)}
               </div>
-              {phrases[g] ? <div className="phrase">{phrases[g]}</div> : <div className="muted">{domain.description}</div>}
+              {phrases[g] ? <div className="phrase">{phrases[g]}</div> : <div className="muted">{t(domain.description)}</div>}
             </div>
 
             {activities[g].map(byId).map((a) => (
@@ -67,10 +70,10 @@ export function PlanScreen({ goals, activities, numbers, phrases, onNumber, onBa
                 <div>
                   {a.link ? (
                     <a href={a.link} target="_blank" rel="noopener noreferrer">
-                      {a.title}
+                      {t(a.title)}
                     </a>
                   ) : (
-                    <span>{a.title}</span>
+                    <span>{t(a.title)}</span>
                   )}
                 </div>
                 <div className="stepper">
@@ -82,7 +85,7 @@ export function PlanScreen({ goals, activities, numbers, phrases, onNumber, onBa
                   >
                     −
                   </button>
-                  <span>{formatGoal(a.goal, numberFor(a))}</span>
+                  <span>{t(formatGoal(a.goal, numberFor(a)))}</span>
                   <button
                     type="button"
                     className="no-print"
@@ -99,8 +102,8 @@ export function PlanScreen({ goals, activities, numbers, phrases, onNumber, onBa
       })}
 
       <div className="center-card stack" style={{ gap: 4 }}>
-        <div className="card-title">{center.name}</div>
-        <div className="muted">{center.description}</div>
+        <div className="card-title">{t(center.name)}</div>
+        <div className="muted">{t(center.description)}</div>
         <div className="row">
           <a href={`mailto:${center.email}`}>{center.email}</a>
           <a href={center.linkedin} target="_blank" rel="noopener noreferrer">

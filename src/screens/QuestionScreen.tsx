@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 import { ChoiceField } from '../components/ChoiceField'
 import { Progress } from '../components/Progress'
+import { useG } from '../components/useGender'
 import { content } from '../content'
 import type { Screen, TextQuestion } from '../content/types'
 import type { Answers } from '../engine/scoring'
@@ -76,6 +77,7 @@ export function QuestionScreen({ screen, index, total, answers, onChange, onNext
 }
 
 function FreeText({ question, value, onChange }: { question: TextQuestion; value: string; onChange: (v: string) => void }) {
+  const g = useG()
   const textarea = useRef<HTMLTextAreaElement>(null)
 
   // Starters are only offered while the box is empty, so a student picks at most one.
@@ -84,7 +86,7 @@ function FreeText({ question, value, onChange }: { question: TextQuestion; value
   // Put the starter in the box and the cursor after it, so the student can keep typing.
   const pickHint = (hint: string) => {
     if (hintsLocked) return
-    onChange(hint)
+    onChange(g(hint))
     requestAnimationFrame(() => {
       const el = textarea.current
       if (!el) return
@@ -96,14 +98,14 @@ function FreeText({ question, value, onChange }: { question: TextQuestion; value
   return (
     <>
       <div>
-        <h2>{question.title}</h2>
-        {question.subtitle && <p className="muted">{question.subtitle}</p>}
+        <h2>{g(question.title)}</h2>
+        {question.subtitle && <p className="muted">{g(question.subtitle)}</p>}
       </div>
-      <p className="stem">{question.stem}</p>
+      <p className="stem">{g(question.stem)}</p>
       <div className="chips">
         {question.hints.map((hint) => (
           <button key={hint} type="button" className="chip" disabled={hintsLocked} onClick={() => pickHint(hint)}>
-            {hint.trim()}…
+            {g(hint).trim()}…
           </button>
         ))}
       </div>
@@ -112,7 +114,7 @@ function FreeText({ question, value, onChange }: { question: TextQuestion; value
         className="input other-input"
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        placeholder={question.placeholder}
+        placeholder={g(question.placeholder)}
         maxLength={600}
       />
       {hintsLocked && (
@@ -120,7 +122,7 @@ function FreeText({ question, value, onChange }: { question: TextQuestion; value
           ניקוי והתחלה מחדש
         </button>
       )}
-      <p className="muted">{content.texts.privacyNote}</p>
+      <p className="muted">{g(content.texts.privacyNote)}</p>
     </>
   )
 }

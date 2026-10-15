@@ -1,5 +1,6 @@
 import type { ChoiceQuestion } from '../content/types'
 import { SearchSelect } from './SearchSelect'
+import { useG } from './useGender'
 
 interface Props {
   question: ChoiceQuestion
@@ -13,6 +14,7 @@ interface Props {
 
 /** One choice question: chips (multi, short labels), cards (single/multi), or a searchable list. */
 export function ChoiceField({ question, picked, other, onPick, onOther, compact }: Props) {
+  const g = useG()
   const toggle = (id: string) => {
     if (question.type === 'single') return onPick([id])
     if (picked.includes(id)) return onPick(picked.filter((x) => x !== id))
@@ -26,13 +28,13 @@ export function ChoiceField({ question, picked, other, onPick, onOther, compact 
     <div className="stack">
       {compact ? (
         <div>
-          <div className="field-label">{question.title}</div>
-          {question.subtitle && <div className="muted">{question.subtitle}</div>}
+          <div className="field-label">{g(question.title)}</div>
+          {question.subtitle && <div className="muted">{g(question.subtitle)}</div>}
         </div>
       ) : (
         <div>
-          <h2>{question.title}</h2>
-          {question.subtitle && <p className="muted">{question.subtitle}</p>}
+          <h2>{g(question.title)}</h2>
+          {question.subtitle && <p className="muted">{g(question.subtitle)}</p>}
         </div>
       )}
 
@@ -42,14 +44,14 @@ export function ChoiceField({ question, picked, other, onPick, onOther, compact 
         <div className="chips">
           {question.options.map((o) => (
             <button key={o.id} type="button" className="chip" aria-pressed={picked.includes(o.id)} onClick={() => toggle(o.id)}>
-              {o.label}
+              {g(o.label)}
             </button>
           ))}
         </div>
       ) : (
         question.options.map((o) => (
           <button key={o.id} type="button" className="card" aria-pressed={picked.includes(o.id)} onClick={() => toggle(o.id)}>
-            {o.label}
+            {g(o.label)}
           </button>
         ))
       )}
@@ -61,7 +63,7 @@ export function ChoiceField({ question, picked, other, onPick, onOther, compact 
             className="input other-input"
             value={other}
             onChange={(e) => onOther(e.target.value)}
-            placeholder="כתוב/י כאן…"
+            placeholder={g('{כתוב|כתבי|כתוב/י} כאן…')}
             maxLength={200}
           />
         </label>

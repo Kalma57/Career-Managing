@@ -1,4 +1,5 @@
 import type { Content, DomainId, Weights } from '../content/types'
+import { gendered } from './gender'
 import type { Answers } from './scoring'
 
 export interface AiResult {
@@ -25,7 +26,7 @@ export function studentText(answers: Answers, stem = ''): string {
 /** The open question's sentence stem without the trailing ellipsis. */
 function stemOf(content: Content): string {
   const question = content.screens.flatMap((s) => s.questions).find((q) => q.type === 'text')
-  return question?.type === 'text' ? question.stem.replace(/[….]+$/, '') : ''
+  return question?.type === 'text' ? gendered(question.stem, 'n').replace(/[….]+$/, '') : ''
 }
 
 /** The AI is only worth calling when the student wrote something. */
@@ -39,8 +40,8 @@ export function buildProfile(content: Content, answers: Answers) {
     screen.questions.flatMap((q) => {
       if (q.type === 'text') return []
       const picked = answers.choices[q.id] ?? []
-      const labels = q.options.filter((o) => picked.includes(o.id)).map((o) => o.label)
-      return labels.length ? [{ question: q.title, answer: labels.join(', ') }] : []
+      const labels = q.options.filter((o) => picked.includes(o.id)).map((o) => gendered(o.label, 'n'))
+      return labels.length ? [{ question: gendered(q.title, 'n'), answer: labels.join(', ') }] : []
     }),
   )
 }

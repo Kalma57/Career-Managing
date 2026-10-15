@@ -32,6 +32,24 @@ describe('content.json', () => {
     }
   })
 
+  describe('gendered wording', () => {
+    const json = JSON.stringify(content)
+    // Slash forms that describe someone other than the student, so they stay neutral.
+    const OTHERS = ['יועץ/ת', 'מנטור/ית', 'המנטור/ית', 'שחושף/ת', 'חבר/ת', 'עוזר/ת']
+
+    it('writes every gendered form as {male|female|neutral}', () => {
+      for (const match of json.match(/\{[^{}]*\|[^{}]*\}/g) ?? []) {
+        expect(match.split('|'), match).toHaveLength(3)
+      }
+    })
+
+    it('marks every slash form that addresses the student', () => {
+      // Remove marked forms, then look for leftover Hebrew slash forms.
+      const unmarked = json.replace(/\{[^{}|]*\|[^{}|]*\|[^{}|]*\}/g, '').match(/[֐-׿]+\/[֐-׿]+/g) ?? []
+      expect(unmarked.filter((form) => !OTHERS.includes(form))).toEqual([])
+    })
+  })
+
   it('breaks ties only by real choice questions', () => {
     for (const id of content.tieBreak) expect(choiceQuestions.map((q) => q.id)).toContain(id)
   })

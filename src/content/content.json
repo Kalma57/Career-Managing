@@ -6,12 +6,18 @@
       "בכמה דקות נגדיר יחד שתי מטרות לתקופת הלימודים, ונמצא פעילויות בפקולטה שיעזרו לך לממש אותן."
     ],
     "introMeta": "כ-3 דקות · 2 מטרות · פעולות מותאמות אישית",
-    "startButton": "בואו נתחיל",
+    "genderQuestion": "איך לפנות אליך?",
+    "genderOptions": [
+      { "id": "f", "label": "בלשון נקבה" },
+      { "id": "m", "label": "בלשון זכר" },
+      { "id": "n", "label": "אחר" }
+    ],
+    "genderNote": "באפשרות \"אחר\" הניסוח יהיה לא מגדרי.",
     "privacyNote": "התשובות לא נשמרות. אין צורך לכתוב פרטים מזהים.",
-    "goalsTitle": "בחר/י 2 מטרות",
+    "goalsTitle": "{בחר|בחרי|בחר/י} 2 מטרות",
     "goalsSubtitle": "סימנו את מה שנראה הכי מתאים לך, אבל הבחירה שלך",
     "recommendedBadge": "מומלץ עבורך",
-    "activitiesSubtitle": "בחר/י 1–2 פעילויות",
+    "activitiesSubtitle": "{בחר|בחרי|בחר/י} 1–2 פעילויות",
     "planTitle": "התוכנית שלי",
     "footer": "המרכז לניהול קריירה",
     "careerCenter": {
@@ -80,7 +86,7 @@
         {
           "id": "workField",
           "type": "search",
-          "title": "באיזה תחום את/ה עובד/ת היום?",
+          "title": "באיזה תחום {אתה|את|את/ה} {עובד|עובדת|עובד/ת} היום?",
           "allowOther": true,
           "options": [
             { "id": "dev", "label": "פיתוח תוכנה / הנדסה", "group": "tech" },
@@ -103,8 +109,8 @@
             { "id": "academia", "label": "חינוך / אקדמיה", "group": "public" },
             { "id": "law", "label": "משפטים", "group": "other" },
             { "id": "media", "label": "מדיה / תוכן / קריאייטיב", "group": "other" },
-            { "id": "self-employed", "label": "יזמות / עצמאי/ת", "group": "other" },
-            { "id": "none", "label": "לא עובד/ת כרגע", "group": "none" }
+            { "id": "self-employed", "label": "יזמות / {עצמאי|עצמאית|עצמאי/ת}", "group": "other" },
+            { "id": "none", "label": "לא {עובד|עובדת|עובד/ת} כרגע", "group": "none" }
           ]
         }
       ]
@@ -118,9 +124,9 @@
           "title": "כמה זמן יש לך מעבר ללימודים?",
           "allowOther": true,
           "options": [
-            { "id": "full", "label": "עובד/ת במשרה מלאה", "maxLoad": "medium" },
-            { "id": "part", "label": "עובד/ת במשרה חלקית", "maxLoad": "heavy" },
-            { "id": "none", "label": "לא עובד/ת", "maxLoad": "heavy" }
+            { "id": "full", "label": "{עובד|עובדת|עובד/ת} במשרה מלאה", "maxLoad": "medium" },
+            { "id": "part", "label": "{עובד|עובדת|עובד/ת} במשרה חלקית", "maxLoad": "heavy" },
+            { "id": "none", "label": "לא {עובד|עובדת|עובד/ת}", "maxLoad": "heavy" }
           ]
         }
       ]
@@ -139,7 +145,7 @@
             { "id": "consulting", "label": "להתקדם לתפקיד ייעוץ", "weights": { "industry": 2, "network": 1 } },
             { "id": "switch", "label": "לעבור לתחום או תעשייה אחרים", "weights": { "industry": 2, "network": 2 } },
             { "id": "startup", "label": "להקים מיזם משלי", "weights": { "skills": 1, "industry": 1, "network": 1 } },
-            { "id": "unsure", "label": "עוד לא יודע/ת, וזה בסדר", "weights": { "self": 2, "industry": 1 } }
+            { "id": "unsure", "label": "עוד לא {יודע|יודעת|יודע/ת}, וזה בסדר", "weights": { "self": 2, "industry": 1 } }
           ]
         }
       ]
@@ -155,9 +161,9 @@
           "max": 2,
           "allowOther": true,
           "options": [
-            { "id": "self", "label": "אני לא בטוח/ה מה מתאים לי ומה החוזקות שלי", "weights": { "self": 3 } },
+            { "id": "self", "label": "אני לא {בטוח|בטוחה|בטוח/ה} מה מתאים לי ומה החוזקות שלי", "weights": { "self": 3 } },
             { "id": "skills", "label": "יש מיומנויות שאני רוצה לחזק (ניהול, מו\"מ, הובלה וכדומה)", "weights": { "skills": 3 } },
-            { "id": "industry", "label": "אני לא מכיר/ה מספיק את התעשייה שמעניינת אותי", "weights": { "industry": 3 } },
+            { "id": "industry", "label": "אני לא {מכיר|מכירה|מכיר/ה} מספיק את התעשייה שמעניינת אותי", "weights": { "industry": 3 } },
             { "id": "network", "label": "אין לי מספיק קשרים במקומות שמעניינים אותי", "weights": { "network": 3 } }
           ]
         }
@@ -171,12 +177,12 @@
           "id": "freeText",
           "type": "text",
           "title": "במילים שלך",
-          "subtitle": "השלם/י את המשפט. אפשר להתחיל מאחת ההצעות או לכתוב חופשי.",
+          "subtitle": "{השלם|השלימי|השלם/י} את המשפט. אפשר להתחיל מאחת ההצעות או לכתוב חופשי.",
           "stem": "בסוף התואר הייתי רוצה ש…",
-          "placeholder": "המשך/י את המשפט כאן…",
+          "placeholder": "{המשך|המשיכי|המשך/י} את המשפט כאן…",
           "hints": [
             "אכיר לעומק את תחום ",
-            "ארגיש בטוח/ה יותר ב",
+            "ארגיש {בטוח|בטוחה|בטוח/ה} יותר ב",
             "אכיר אנשים ב",
             "אדע מה אני רוצה לעשות אחרי התואר"
           ]
@@ -224,7 +230,7 @@
     },
     {
       "id": "self-letter",
-      "title": "מה אני יודע/ת על עצמי היום?",
+      "title": "מה אני {יודע|יודעת|יודע/ת} על עצמי היום?",
       "description": "לכתוב מה גיליתי על עצמי מאז תחילת התואר, ומה עדיין לא ברור לי על עצמי ועל עולם העבודה",
       "domains": ["self"],
       "load": "light",
@@ -421,7 +427,7 @@
     },
     {
       "id": "research-assistant",
-      "title": "עוזר/ת מחקר",
+      "title": "{עוזר מחקר|עוזרת מחקר|עוזר/ת מחקר}",
       "description": "לעבוד עם חבר/ת סגל על מחקר בתחום שמעניין אותך",
       "domains": ["skills", "industry"],
       "load": "medium",

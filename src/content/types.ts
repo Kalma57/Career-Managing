@@ -1,4 +1,7 @@
-// The shape of content.json. Assigning the JSON to `Content` makes the build
+import type { Gender } from '../engine/gender'
+
+// The shape of content.json. Texts may contain gendered forms written as
+// {male|female|neutral}; see engine/gender.ts. Assigning the JSON to `Content` makes the build
 // fail on typos (e.g. an unknown domain id) instead of shipping them.
 
 export type DomainId = 'self' | 'skills' | 'industry' | 'network'
@@ -81,7 +84,10 @@ export interface Texts {
   introTitle: string
   introBody: string[]
   introMeta: string
-  startButton: string
+  /** Intro: how to address the student. Choosing an option also starts the questionnaire. */
+  genderQuestion: string
+  genderOptions: { id: Gender; label: string }[]
+  genderNote: string
   privacyNote: string
   goalsTitle: string
   goalsSubtitle: string
