@@ -60,14 +60,6 @@ export interface Screen {
   optional?: boolean
 }
 
-export interface GoalTemplate {
-  /** Measurable goal text; `{n}` is replaced by the chosen number. */
-  text: string
-  default: number
-  min: number
-  max: number
-}
-
 export interface Activity {
   id: string
   title: string
@@ -75,7 +67,8 @@ export interface Activity {
   domains: DomainId[]
   load: Load
   link: string | null
-  goal: GoalTemplate
+  /** The goal sentence with the client's fixed target already written in; the student does not pick the number. */
+  goal: string
   /** Extra ranking points when a given answer was picked, keyed "questionId:optionId". */
   boost?: Record<string, number>
 }

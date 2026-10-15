@@ -28,7 +28,6 @@ function App() {
   const [answers, setAnswers] = useState<Answers>(emptyAnswers)
   const [goals, setGoals] = useState<DomainId[]>([])
   const [activities, setActivities] = useState(emptyActivities)
-  const [numbers, setNumbers] = useState<Record<string, number>>({})
 
   const [ai, setAi] = useState<AiResult | null>(null)
 
@@ -62,7 +61,6 @@ function App() {
     setAnswers(emptyAnswers())
     setGoals([])
     setActivities(emptyActivities())
-    setNumbers({})
     setAi(null)
     setGender('n')
     setStep({ kind: 'intro' })
@@ -148,9 +146,7 @@ function App() {
           <PlanScreen
             goals={goals}
             activities={activities}
-            numbers={numbers}
             phrases={ai?.phrases ?? {}}
-            onNumber={(id, n) => setNumbers((prev) => ({ ...prev, [id]: n }))}
             onBack={() => setStep({ kind: 'activities', goalIndex: 1 })}
             onRestart={restart}
           />

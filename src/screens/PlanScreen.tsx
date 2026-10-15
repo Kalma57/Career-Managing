@@ -1,15 +1,12 @@
 import { useG } from '../components/useGender'
 import { content } from '../content'
 import type { Activity, DomainId } from '../content/types'
-import { formatGoal } from '../engine/scoring'
 
 interface Props {
   goals: DomainId[]
   activities: Record<DomainId, string[]>
-  numbers: Record<string, number>
   /** Personal goal sentences from the AI; the domain description is shown when missing. */
   phrases: Partial<Record<DomainId, string>>
-  onNumber: (activityId: string, n: number) => void
   onBack: () => void
   onRestart: () => void
 }
@@ -17,12 +14,11 @@ interface Props {
 const byId = (id: string) => content.activities.find((a) => a.id === id) as Activity
 const domainById = (id: DomainId) => content.domains.find((d) => d.id === id)!
 
-export function PlanScreen({ goals, activities, numbers, phrases, onNumber, onBack, onRestart }: Props) {
+export function PlanScreen({ goals, activities, phrases, onBack, onRestart }: Props) {
   // Named `t` here because `g` is the goal in the loops below.
   const t = useG()
   const { texts } = content
   const center = texts.careerCenter
-  const numberFor = (a: Activity) => numbers[a.id] ?? a.goal.default
 
   const planText = () =>
     [
@@ -31,7 +27,7 @@ export function PlanScreen({ goals, activities, numbers, phrases, onNumber, onBa
         '',
         `מטרה ${i + 1}: ${t(domainById(g).title)}`,
         ...(phrases[g] ? [phrases[g]] : []),
-        ...activities[g].map(byId).map((a) => `• ${t(formatGoal(a.goal, numberFor(a)))}`),
+        ...activities[g].map(byId).map((a) => `• ${t(a.goal)}`),
       ]),
       '',
       `${t(center.name)}: ${center.email}`,
@@ -76,25 +72,7 @@ export function PlanScreen({ goals, activities, numbers, phrases, onNumber, onBa
                     <span>{t(a.title)}</span>
                   )}
                 </div>
-                <div className="stepper">
-                  <button
-                    type="button"
-                    className="no-print"
-                    aria-label="פחות"
-                    onClick={() => onNumber(a.id, Math.max(a.goal.min, numberFor(a) - 1))}
-                  >
-                    −
-                  </button>
-                  <span>{t(formatGoal(a.goal, numberFor(a)))}</span>
-                  <button
-                    type="button"
-                    className="no-print"
-                    aria-label="יותר"
-                    onClick={() => onNumber(a.id, Math.min(a.goal.max, numberFor(a) + 1))}
-                  >
-                    +
-                  </button>
-                </div>
+                <div className="plan-target">{t(a.goal)}</div>
               </div>
             ))}
           </section>

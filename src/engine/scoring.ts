@@ -3,7 +3,6 @@ import type {
   ChoiceQuestion,
   Content,
   DomainId,
-  GoalTemplate,
   Load,
   Weights,
 } from '../content/types'
@@ -147,9 +146,4 @@ export function rankActivities(
     .sort((x, y) => y.s - x.s || x.index - y.index)
     .slice(0, ACTIVITIES_PER_GOAL)
     .map(({ a }) => a)
-}
-
-export function formatGoal(template: GoalTemplate, n: number): string {
-  const clamped = Math.min(template.max, Math.max(template.min, n))
-  return template.text.replace('{n}', String(clamped))
 }

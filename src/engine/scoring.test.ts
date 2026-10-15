@@ -5,7 +5,6 @@ import {
   type Answers,
   capAiWeights,
   emptyAnswers,
-  formatGoal,
   maxLoad,
   rankActivities,
   rankDomains,
@@ -119,17 +118,5 @@ describe('rankActivities', () => {
   it('prefers activities that serve both chosen goals', () => {
     const [first] = rankActivities(content, emptyAnswers(), 'industry', ['industry', 'network'])
     expect(first.domains).toEqual(expect.arrayContaining(['industry', 'network']))
-  })
-})
-
-describe('formatGoal', () => {
-  const template = { text: 'להשתתף ב-{n} מפגשים', default: 3, min: 1, max: 5 }
-
-  it('fills in the number', () => {
-    expect(formatGoal(template, 2)).toBe('להשתתף ב-2 מפגשים')
-  })
-
-  it('clamps to the allowed range', () => {
-    expect(formatGoal(template, 9)).toBe('להשתתף ב-5 מפגשים')
   })
 })

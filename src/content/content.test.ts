@@ -63,14 +63,15 @@ describe('content.json', () => {
     }
   })
 
-  it('gives every activity valid domains, load and goal template', () => {
+  it('gives every activity valid domains, load and a fixed goal sentence', () => {
     for (const a of content.activities) {
       expect(a.domains.length, a.id).toBeGreaterThan(0)
       for (const d of a.domains) expect(DOMAINS, a.id).toContain(d)
       expect(LOADS, a.id).toContain(a.load)
-      expect(a.goal.text, a.id).toContain('{n}')
-      expect(a.goal.min, a.id).toBeLessThanOrEqual(a.goal.default)
-      expect(a.goal.default, a.id).toBeLessThanOrEqual(a.goal.max)
+      expect(typeof a.goal, a.id).toBe('string')
+      expect(a.goal.trim().length, a.id).toBeGreaterThan(0)
+      // The target is fixed in the sentence itself, so no template placeholder may be left over.
+      expect(a.goal, a.id).not.toContain('{n}')
     }
   })
 
