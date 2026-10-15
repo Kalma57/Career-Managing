@@ -18,7 +18,10 @@ function answers(choices: Answers['choices']): Answers {
 
 const top2 = (a: Answers) => rankDomains(content, scoreDomains(content, a), a).slice(0, 2)
 
-const directions = ['grow', 'switch', 'startup', 'unsure']
+// Every direction answer in content.json, so new answers are covered automatically.
+const directions = content.screens
+  .flatMap((s) => s.questions)
+  .flatMap((q) => (q.id === 'direction' && q.type !== 'text' ? q.options.map((o) => o.id) : []))
 const lacks = ['self', 'skills', 'industry', 'network']
 const lackCombos = [
   ...lacks.map((x) => [x]),

@@ -373,6 +373,15 @@ textarea.input {
   padding: 14px;
 }
 
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--accent-text);
+}
+
 @media print {
   .no-print {
     display: none !important;

@@ -40,7 +40,7 @@ You do not replace the professional career counseling of the school's Career Man
 
 There are four career-management domains:
 - self: getting to know myself – strengths, weaknesses, interests, motivation, what direction fits me
-- skills: developing skills for the working world – presenting, negotiating, leading, teamwork
+- skills: developing skills for the working world – managing, negotiating, leading, teamwork and the like
 - industry: getting to know industries, organizations and roles that interest me
 - network: expanding my professional network – peers, faculty, alumni, industry people
 

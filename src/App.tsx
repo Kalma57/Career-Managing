@@ -64,7 +64,12 @@ function App() {
     setStep({ kind: 'intro' })
   }
 
-  return <main className="app">{renderStep()}</main>
+  return (
+    <main className="app">
+      {renderStep()}
+      <footer className="site-footer">{content.texts.footer}</footer>
+    </main>
+  )
 
   function renderStep() {
     switch (step.kind) {

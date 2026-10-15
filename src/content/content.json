@@ -13,6 +13,7 @@
     "recommendedBadge": "מומלץ עבורך",
     "activitiesSubtitle": "בחר/י 1–2 פעילויות",
     "planTitle": "התוכנית שלי",
+    "footer": "המרכז לניהול קריירה",
     "careerCenter": {
       "name": "המרכז לניהול קריירה",
       "description": "לייעוץ אישי ולליווי מקצועי לאורך התואר",
@@ -23,7 +24,7 @@
 
   "domains": [
     { "id": "self", "title": "היכרות עם עצמי", "description": "להבין מה מעניין אותי, מה מניע אותי ומה החוזקות שלי" },
-    { "id": "skills", "title": "פיתוח מיומנויות", "description": "לחזק מיומנויות שעולם העבודה מחפש: הצגה, מו\"מ, הובלה ועבודת צוות" },
+    { "id": "skills", "title": "פיתוח מיומנויות", "description": "לחזק מיומנויות שעולם העבודה מחפש: ניהול, מו\"מ, הובלה, עבודת צוות וכדומה" },
     { "id": "industry", "title": "הכרת התעשייה", "description": "ללמוד מקרוב תחומים, ארגונים ותפקידים שמעניינים אותי" },
     { "id": "network", "title": "הרחבת הרשת", "description": "להכיר אנשים: עמיתים, מרצים, בוגרים ואנשי תעשייה" }
   ],
@@ -134,6 +135,8 @@
           "allowOther": true,
           "options": [
             { "id": "grow", "label": "להתקדם לתפקיד בכיר בתחום שלי", "weights": { "skills": 2, "network": 1 } },
+            { "id": "management", "label": "להתקדם לניהול", "weights": { "skills": 2, "self": 1 } },
+            { "id": "consulting", "label": "להתקדם לתפקיד ייעוץ", "weights": { "industry": 2, "network": 1 } },
             { "id": "switch", "label": "לעבור לתחום או תעשייה אחרים", "weights": { "industry": 2, "network": 2 } },
             { "id": "startup", "label": "להקים מיזם משלי", "weights": { "skills": 1, "industry": 1, "network": 1 } },
             { "id": "unsure", "label": "עוד לא יודע/ת, וזה בסדר", "weights": { "self": 2, "industry": 1 } }
@@ -153,7 +156,7 @@
           "allowOther": true,
           "options": [
             { "id": "self", "label": "אני לא בטוח/ה מה מתאים לי ומה החוזקות שלי", "weights": { "self": 3 } },
-            { "id": "skills", "label": "יש מיומנויות שאני רוצה לחזק (הצגה, מו\"מ, הובלה)", "weights": { "skills": 3 } },
+            { "id": "skills", "label": "יש מיומנויות שאני רוצה לחזק (ניהול, מו\"מ, הובלה וכדומה)", "weights": { "skills": 3 } },
             { "id": "industry", "label": "אני לא מכיר/ה מספיק את התעשייה שמעניינת אותי", "weights": { "industry": 3 } },
             { "id": "network", "label": "אין לי מספיק קשרים במקומות שמעניינים אותי", "weights": { "network": 3 } }
           ]
@@ -244,7 +247,8 @@
       "domains": ["industry", "network"],
       "load": "light",
       "link": null,
-      "goal": { "text": "להציג את עצמי ל-{n} מרצים אורחים בסמסטר", "default": 3, "min": 1, "max": 6 }
+      "goal": { "text": "להציג את עצמי ל-{n} מרצים אורחים בסמסטר", "default": 3, "min": 1, "max": 6 },
+      "boost": { "direction:consulting": 1 }
     },
     {
       "id": "clubs",
@@ -263,11 +267,12 @@
       "domains": ["skills", "network"],
       "load": "heavy",
       "link": "https://coller.tau.ac.il/students/clubs",
-      "goal": { "text": "להצטרף להנהלת מועדון ולארגן {n} אירועים בשנה", "default": 2, "min": 1, "max": 5 }
+      "goal": { "text": "להצטרף להנהלת מועדון ולארגן {n} אירועים בשנה", "default": 2, "min": 1, "max": 5 },
+      "boost": { "direction:management": 1 }
     },
     {
       "id": "mentoring",
-      "title": "תוכנית מנטורינג MBA",
+      "title": "תוכנית המנטורינג \"מספסל הלימודים לניהול\"",
       "description": "מנטור/ית מהתעשייה שמלווה אותך לאורך שנה",
       "domains": ["industry", "network", "self"],
       "load": "medium",
@@ -327,7 +332,7 @@
       "load": "medium",
       "link": null,
       "goal": { "text": "לקיים {n} שיחות היכרות עם בוגרים בסמסטר", "default": 3, "min": 1, "max": 8 },
-      "boost": { "direction:switch": 1 }
+      "boost": { "direction:consulting": 1, "direction:switch": 1 }
     },
     {
       "id": "linkedin",
@@ -344,7 +349,7 @@
       "description": "סמסטר בחו\"ל: תעשייה אחרת, רשת בינלאומית והיכרות עם עצמך בסביבה חדשה",
       "domains": ["network", "industry", "skills", "self"],
       "load": "heavy",
-      "link": "https://coller.tau.ac.il/international-experience/mba-interested",
+      "link": "https://coller.tau.ac.il/EXCHANGE-HE",
       "goal": { "text": "לבדוק {n} אוניברסיטאות שותפות ולהגיש מועמדות", "default": 3, "min": 1, "max": 5 }
     },
     {
@@ -353,8 +358,9 @@
       "description": "פיתוח מיומנויות להובלת צוותים מגוונים",
       "domains": ["skills"],
       "load": "medium",
-      "link": null,
-      "goal": { "text": "להשתתף ב-{n} מפגשי התוכנית", "default": 4, "min": 1, "max": 10 }
+      "link": "https://diversitytau.my.canva.site/diverse-management-by-coller-m",
+      "goal": { "text": "להשתתף ב-{n} מפגשי התוכנית", "default": 4, "min": 1, "max": 10 },
+      "boost": { "direction:management": 1 }
     },
     {
       "id": "skills-courses",
@@ -364,7 +370,7 @@
       "load": "medium",
       "link": null,
       "goal": { "text": "לקחת {n} קורסי מיומנויות במהלך התואר", "default": 2, "min": 1, "max": 4 },
-      "boost": { "direction:grow": 1 }
+      "boost": { "direction:management": 1, "direction:grow": 1 }
     },
     {
       "id": "startup-coller",
@@ -410,7 +416,8 @@
       "domains": ["skills", "industry"],
       "load": "medium",
       "link": null,
-      "goal": { "text": "לקחת {n} קורסי פרויקט במהלך התואר", "default": 1, "min": 1, "max": 2 }
+      "goal": { "text": "לקחת {n} קורסי פרויקט במהלך התואר", "default": 1, "min": 1, "max": 2 },
+      "boost": { "direction:consulting": 1 }
     },
     {
       "id": "research-assistant",

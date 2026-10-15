@@ -88,6 +88,8 @@ export interface Texts {
   recommendedBadge: string
   activitiesSubtitle: string
   planTitle: string
+  /** Shown at the bottom of every page. */
+  footer: string
   careerCenter: {
     name: string
     description: string
