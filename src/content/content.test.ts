@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { content } from './index'
 
-const DOMAINS = ['self', 'skills', 'industry', 'network']
+const DOMAINS = content.domains.map((d) => d.id)
 const LOADS = ['light', 'medium', 'heavy']
 const questions = content.screens.flatMap((s) => s.questions)
 const choiceQuestions = questions.flatMap((q) => (q.type === 'text' ? [] : [q]))
@@ -11,8 +11,9 @@ function expectUnique(ids: string[]) {
 }
 
 describe('content.json', () => {
-  it('defines exactly the four domains', () => {
-    expect(content.domains.map((d) => d.id)).toEqual(DOMAINS)
+  it('defines at least two goal domains with simple English ids', () => {
+    expect(DOMAINS.length).toBeGreaterThanOrEqual(2)
+    for (const id of DOMAINS) expect(id).toMatch(/^[a-z][a-z0-9-]{0,30}$/)
   })
 
   it('has unique ids for screens, questions, options and activities', () => {

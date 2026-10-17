@@ -4,9 +4,11 @@ import type { Gender } from '../engine/gender'
 // {male|female|neutral}; see engine/gender.ts. Assigning the JSON to `Content` makes the build
 // fail on typos (e.g. an unknown domain id) instead of shipping them.
 
-export type DomainId = 'self' | 'skills' | 'industry' | 'network'
+/** A goal domain id from content.domains, e.g. "network". Domains are defined only in content.json. */
+export type DomainId = string
 
-export type Weights = Partial<Record<DomainId, number>>
+/** Points per domain id; domains not listed get 0. */
+export type Weights = Record<DomainId, number>
 
 export type Load = 'light' | 'medium' | 'heavy'
 

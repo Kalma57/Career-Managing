@@ -2,7 +2,15 @@ import { describe, expect, it, vi } from 'vitest'
 import { analyze, parseRequest, parseResult } from './analyze.ts'
 
 const env = { GEMINI_API_KEY: 'test-key' }
+const domains = [
+  { id: 'self', title: 'היכרות עם עצמי', description: 'א' },
+  { id: 'skills', title: 'פיתוח מיומנויות', description: 'ב' },
+  { id: 'industry', title: 'הכרת התעשייה', description: 'ג' },
+  { id: 'network', title: 'הרחבת הרשת', description: 'ד' },
+]
+const ids = domains.map((d) => d.id)
 const body = {
+  domains,
   profile: [{ question: 'התחום שבו אני עובד/ת', answer: 'פיתוח תוכנה' }],
   freeText: 'אכיר לעומק את תחום הפיננסים',
 }
@@ -24,6 +32,17 @@ describe('parseRequest', () => {
     expect(parseRequest(body)).toEqual(body)
   })
 
+  it('rejects a body without usable domains', () => {
+    expect(parseRequest({ ...body, domains: [domains[0]] })).toBeNull()
+    expect(parseRequest({ ...body, domains: [domains[0], domains[0]] })).toBeNull()
+    expect(parseRequest({ ...body, domains: [{ id: 'Bad Id!', title: 'x' }, domains[1]] })).toBeNull()
+  })
+
+  it('accepts a new goal added to the content', () => {
+    const extra = [...domains, { id: 'wellbeing', title: 'רווחה אישית', description: 'ה' }]
+    expect(parseRequest({ ...body, domains: extra })?.domains).toHaveLength(5)
+  })
+
   it('rejects a body without free text', () => {
     expect(parseRequest({ ...body, freeText: '   ' })).toBeNull()
     expect(parseRequest({ profile: 'x', freeText: 'y' })).toBeNull()
@@ -31,7 +50,7 @@ describe('parseRequest', () => {
   })
 
   it('trims long text and drops malformed profile items', () => {
-    const parsed = parseRequest({ profile: [{ question: 1 }, ...body.profile], freeText: 'א'.repeat(2000) })
+    const parsed = parseRequest({ domains, profile: [{ question: 1 }, ...body.profile], freeText: 'א'.repeat(2000) })
     expect(parsed?.freeText.length).toBe(600)
     expect(parsed?.profile).toEqual(body.profile)
   })
@@ -39,13 +58,13 @@ describe('parseRequest', () => {
 
 describe('parseResult', () => {
   it('clamps weights to 0–3 whole numbers', () => {
-    const result = parseResult({ weights: { self: 9, skills: -1, industry: 1.6, network: 'x' }, phrases: {} })
+    const result = parseResult({ weights: { self: 9, skills: -1, industry: 1.6, network: 'x' }, phrases: {} }, ids)
     expect(result?.weights).toEqual({ self: 3, skills: 0, industry: 2, network: 0 })
   })
 
   it('rejects output without weights or phrases', () => {
-    expect(parseResult({ weights: {} })).toBeNull()
-    expect(parseResult('text')).toBeNull()
+    expect(parseResult({ weights: {} }, ids)).toBeNull()
+    expect(parseResult('text', ids)).toBeNull()
   })
 })
 

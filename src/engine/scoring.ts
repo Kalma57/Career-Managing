@@ -39,7 +39,8 @@ function choiceQuestions(content: Content): ChoiceQuestion[] {
 function addWeights(scores: Scores, weights: Weights | undefined) {
   if (!weights) return
   for (const [domain, points] of Object.entries(weights)) {
-    scores[domain as DomainId] += points ?? 0
+    // Ignore weights for domains that don't exist (content.test.ts reports them).
+    if (domain in scores) scores[domain] += points ?? 0
   }
 }
 

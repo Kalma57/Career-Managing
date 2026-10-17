@@ -10,7 +10,6 @@ export interface AiResult {
 /** How long the student waits for the AI before we continue without it. */
 export const AI_TIMEOUT_MS = 6000
 
-const DOMAINS: DomainId[] = ['self', 'skills', 'industry', 'network']
 
 /**
  * Everything the student wrote in their own words: "other" fields and the open question.
@@ -46,12 +45,12 @@ export function buildProfile(content: Content, answers: Answers) {
   )
 }
 
-function parse(raw: unknown): AiResult | null {
+function parse(raw: unknown, ids: DomainId[]): AiResult | null {
   if (!raw || typeof raw !== 'object') return null
   const { weights, phrases } = raw as { weights?: Record<string, unknown>; phrases?: Record<string, unknown> }
   if (!weights || !phrases) return null
   const result: AiResult = { weights: {}, phrases: {} }
-  for (const d of DOMAINS) {
+  for (const d of ids) {
     if (typeof weights[d] === 'number') result.weights[d] = weights[d]
     if (typeof phrases[d] === 'string' && phrases[d]) result.phrases[d] = phrases[d]
   }
@@ -64,11 +63,19 @@ export async function fetchAi(content: Content, answers: Answers, fetchImpl: typ
     const response = await fetchImpl('/api/analyze', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ profile: buildProfile(content, answers), freeText: studentText(answers, stemOf(content)) }),
+      body: JSON.stringify({
+        domains: content.domains.map((d) => ({
+          id: d.id,
+          title: gendered(d.title, 'n'),
+          description: gendered(d.description, 'n'),
+        })),
+        profile: buildProfile(content, answers),
+        freeText: studentText(answers, stemOf(content)),
+      }),
       signal: AbortSignal.timeout(AI_TIMEOUT_MS),
     })
     if (!response.ok) return null
-    return parse(await response.json())
+    return parse(await response.json(), content.domains.map((d) => d.id))
   } catch {
     return null
   }
