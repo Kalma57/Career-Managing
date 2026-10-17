@@ -14,7 +14,8 @@ if (!description) {
 
 // Content edits never need these; a change here means something went wrong.
 const BLOCKED = [/^\.env/, /^api\//, /^server\//, /^src\/engine\//, /^\.agents\//, /package(-lock)?\.json$/, /^vite\.config/, /^tsconfig/, /\.test\.ts$/]
-const files = changedFiles().map((line) => line.slice(3).replace(/^"|"$/g, ''))
+// Status lines look like " M path" or "?? path"; for renames ("R  old -> new") check the new path.
+const files = changedFiles().map((line) => line.slice(3).split(' -> ').pop().replace(/^"|"$/g, ''))
 const blocked = files.filter((f) => BLOCKED.some((re) => re.test(f)))
 if (blocked.length) {
   console.log(`BLOCKED: these files must not change in a content edit:\n${blocked.join('\n')}`)

@@ -13,11 +13,13 @@ export function run(cmd, args, { show = false, shell = false } = {}) {
     shell,
     stdio: show ? 'inherit' : 'pipe',
   })
-  return { ok: result.status === 0, out: (result.stdout ?? '').trim(), err: (result.stderr ?? '').trim() }
+  // trimEnd only: git status lines start with a meaningful space (" M file").
+  return { ok: result.status === 0, out: (result.stdout ?? '').trimEnd(), err: (result.stderr ?? '').trim() }
 }
 
 export const git = (...args) => run('git', args)
-export const npm = (...args) => run('npm', args, { show: true, shell: process.platform === 'win32' })
+// npm is a .cmd on Windows, which needs a shell; the arguments here are fixed words, never user text.
+export const npm = (...args) => run(`npm ${args.join(' ')}`, [], { show: true, shell: true })
 
 export function currentBranch() {
   return git('rev-parse', '--abbrev-ref', 'HEAD').out
@@ -25,7 +27,7 @@ export function currentBranch() {
 
 /** Files with unpublished changes, as git status lines. */
 export function changedFiles() {
-  return git('status', '--porcelain').out.split('\n').filter(Boolean)
+  return git('status', '--porcelain', '--untracked-files=all').out.split('\n').filter(Boolean)
 }
 
 /** The highest edit number so far, from tags named edit-<n>. */

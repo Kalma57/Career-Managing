@@ -12,8 +12,12 @@ if (pending.length) {
   console.log(`UNPUBLISHED_CHANGES:\n${pending.join('\n')}`)
 } else {
   git('fetch', '--tags', '--quiet')
-  const pull = git('pull', '--ff-only', '--quiet')
-  console.log(pull.ok ? 'UP_TO_DATE' : `PULL_FAILED: ${pull.err}`)
+  if (!git('rev-parse', '--abbrev-ref', '@{upstream}').ok) {
+    console.log('NO_UPSTREAM (local branch, nothing to pull)')
+  } else {
+    const pull = git('pull', '--ff-only', '--quiet')
+    console.log(pull.ok ? 'UP_TO_DATE' : `PULL_FAILED: ${pull.err}`)
+  }
 }
 
 if (!existsSync(`${ROOT}node_modules`)) {
