@@ -1,7 +1,11 @@
 import { describe, expect, it, vi } from 'vitest'
-import { content } from '../content'
+import type { Content } from '../content/types'
 import { buildProfile, fetchAi, needsAi, studentText } from './ai'
 import { emptyAnswers, type Answers } from './scoring'
+import fixture from './test-content.json'
+
+// Frozen copy of the content; see scoring.test.ts.
+const content = fixture as Content
 
 const answers: Answers = {
   choices: { workField: ['finance'], direction: ['switch'] },

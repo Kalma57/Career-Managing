@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { content } from './index'
+import { rankDomains, scoreDomains, type Answers, emptyAnswers } from '../engine/scoring'
 
 const DOMAINS = content.domains.map((d) => d.id)
 const LOADS = ['light', 'medium', 'heavy']
@@ -49,6 +50,35 @@ describe('content.json', () => {
       const unmarked = json.replace(/\{[^{}|]*\|[^{}|]*\|[^{}|]*\}/g, '').match(/[֐-׿]+\/[֐-׿]+/g) ?? []
       expect(unmarked.filter((form) => !OTHERS.includes(form))).toEqual([])
     })
+  })
+
+  // The promise to students: a goal they say is missing always makes the two recommendations.
+  // Checked over every combination of "direction", one or two "missing" answers and the background group.
+  it('always recommends what the student said is missing', () => {
+    const byId = (id: string) => choiceQuestions.find((q) => q.id === id)
+    const directions = byId('direction')?.options ?? []
+    const missing = byId('missing')?.options ?? []
+    const workFields = (byId('workField')?.options ?? []).filter(
+      (o, i, all) => all.findIndex((x) => x.group === o.group) === i, // one per group
+    )
+    const combos = [...missing.map((m) => [m]), ...missing.flatMap((m, i) => missing.slice(i + 1).map((n) => [m, n]))]
+    // The domain each "missing" answer points to most strongly.
+    const target = (o: (typeof missing)[number]) =>
+      Object.entries(o.weights ?? {}).sort((a, b) => b[1] - a[1])[0]?.[0]
+
+    for (const d of directions.length ? directions : [undefined]) {
+      for (const combo of combos) {
+        for (const w of workFields.length ? workFields : [undefined]) {
+          const choices: Answers['choices'] = { missing: combo.map((o) => o.id) }
+          if (d) choices.direction = [d.id]
+          if (w) choices.workField = [w.id]
+          const answers = { ...emptyAnswers(), choices }
+          const top = rankDomains(content, scoreDomains(content, answers), answers).slice(0, 2)
+          const expected = combo.map(target).filter(Boolean)
+          expect(top, `${d?.label} | ${combo.map((o) => o.label)} | ${w?.label}`).toEqual(expect.arrayContaining(expected))
+        }
+      }
+    }
   })
 
   it('breaks ties only by real choice questions', () => {

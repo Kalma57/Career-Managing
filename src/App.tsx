@@ -68,12 +68,18 @@ function App() {
 
   return (
     <GenderContext.Provider value={gender}>
-      <main className="app">
+      {/* data-screen lets CSS style one screen only, e.g. .app[data-screen="goals"] h1 { … } */}
+      <main className="app" data-screen={screenName()}>
         {renderStep()}
         <footer className="site-footer">{content.texts.footer}</footer>
       </main>
     </GenderContext.Provider>
   )
+
+  /** intro, question-<screen id> (e.g. question-direction), loading, goals, activities, plan */
+  function screenName() {
+    return step.kind === 'question' ? `question-${screens[step.index].id}` : step.kind
+  }
 
   function renderStep() {
     switch (step.kind) {

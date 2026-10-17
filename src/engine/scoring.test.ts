@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { content } from '../content'
+import type { Content } from '../content/types'
 import {
   AI_WEIGHT_CAP,
   type Answers,
@@ -10,6 +10,11 @@ import {
   rankDomains,
   scoreDomains,
 } from './scoring'
+import fixture from './test-content.json'
+
+// A frozen copy of the content, so these tests check the engine's logic and don't break
+// when the live content.json is edited. Rules for the live content are in content.test.ts.
+const content = fixture as Content
 
 function answers(choices: Answers['choices']): Answers {
   return { ...emptyAnswers(), choices }
@@ -17,15 +22,6 @@ function answers(choices: Answers['choices']): Answers {
 
 const top2 = (a: Answers) => rankDomains(content, scoreDomains(content, a), a).slice(0, 2)
 
-// Every direction answer in content.json, so new answers are covered automatically.
-const directions = content.screens
-  .flatMap((s) => s.questions)
-  .flatMap((q) => (q.id === 'direction' && q.type !== 'text' ? q.options.map((o) => o.id) : []))
-const lacks = ['self', 'skills', 'industry', 'network']
-const lackCombos = [
-  ...lacks.map((x) => [x]),
-  ...lacks.flatMap((x, i) => lacks.slice(i + 1).map((y) => [x, y])),
-]
 
 describe('scoreDomains', () => {
   it('recommends industry and network to a career switcher', () => {
@@ -45,17 +41,6 @@ describe('scoreDomains', () => {
   it('lets the "missing" answers outweigh the direction', () => {
     const a = answers({ direction: ['grow'], missing: ['self', 'industry'] })
     expect(top2(a).sort()).toEqual(['industry', 'self'])
-  })
-
-  it('always recommends what the student said is missing, for every answer combination', () => {
-    for (const direction of directions) {
-      for (const missing of lackCombos) {
-        for (const workField of ['dev', 'none']) {
-          const top = top2(answers({ direction: [direction], missing, workField: [workField] }))
-          expect(top, `${direction} | ${missing} | ${workField}`).toEqual(expect.arrayContaining(missing))
-        }
-      }
-    }
   })
 
   it('breaks ties by explicit answers before the fixed domain order', () => {

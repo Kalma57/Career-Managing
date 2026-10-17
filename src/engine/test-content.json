@@ -1,0 +1,501 @@
+{
+  "texts": {
+    "introTitle": "שלום, וברוכות וברוכים הבאים ל‑MBA",
+    "introBody": [
+      "תקופת הלימודים היא הרבה יותר מקורסים, ציונים ותואר. זו הזדמנות לבנות לעצמך מאגר משאבים לקריירה: ידע, מיומנויות, ניסיון, קשרים והיכרות טובה יותר עם עצמך.",
+      "בכמה דקות נגדיר יחד שתי מטרות לתקופת הלימודים, ונמצא פעילויות בפקולטה שיעזרו לך לממש אותן."
+    ],
+    "introMeta": "כ-3 דקות · 2 מטרות · פעולות מותאמות אישית",
+    "genderQuestion": "איך לפנות אליך?",
+    "genderOptions": [
+      { "id": "f", "label": "בלשון נקבה" },
+      { "id": "m", "label": "בלשון זכר" },
+      { "id": "n", "label": "אחר" }
+    ],
+    "genderNote": "באפשרות \"אחר\" הניסוח יהיה לא מגדרי.",
+    "privacyNote": "התשובות לא נשמרות. אין צורך לכתוב פרטים מזהים.",
+    "goalsTitle": "{בחר|בחרי|בחר/י} 2 מטרות",
+    "goalsSubtitle": "סימנו את מה שנראה הכי מתאים לך, אבל הבחירה שלך",
+    "recommendedBadge": "מומלץ עבורך",
+    "activitiesSubtitle": "{בחר|בחרי|בחר/י} 1–2 פעילויות",
+    "planTitle": "התוכנית שלי",
+    "footer": "המרכז לניהול קריירה",
+    "careerCenter": {
+      "name": "המרכז לניהול קריירה",
+      "description": "לייעוץ אישי ולליווי מקצועי לאורך התואר",
+      "email": "collercmc@tauex.tau.ac.il",
+      "linkedin": "https://www.linkedin.com/company/career-management-center-coller"
+    }
+  },
+
+  "domains": [
+    { "id": "self", "title": "היכרות עם עצמי", "description": "להבין מה מעניין אותי, מה מניע אותי ומה החוזקות שלי" },
+    { "id": "skills", "title": "פיתוח מיומנויות", "description": "לחזק מיומנויות שעולם העבודה מחפש: ניהול, מו\"מ, הובלה, עבודת צוות וכדומה" },
+    { "id": "industry", "title": "הכרת התעשייה", "description": "ללמוד מקרוב תחומים, ארגונים ותפקידים שמעניינים אותי" },
+    { "id": "network", "title": "הרחבת הרשת", "description": "להכיר אנשים: עמיתים, מרצים, בוגרים ואנשי תעשייה" }
+  ],
+
+  "screens": [
+    {
+      "id": "background",
+      "questions": [
+        {
+          "id": "degrees",
+          "type": "multi",
+          "title": "אילו תארים יש לך?",
+          "subtitle": "אפשר לבחור כמה",
+          "allowOther": true,
+          "options": [
+            { "id": "ba", "label": "BA" },
+            { "id": "bsc", "label": "BSc" },
+            { "id": "llb", "label": "LLB" },
+            { "id": "ma", "label": "MA" },
+            { "id": "msc", "label": "MSc" },
+            { "id": "mba", "label": "MBA" },
+            { "id": "phd", "label": "PhD" }
+          ]
+        },
+        {
+          "id": "studyField",
+          "type": "search",
+          "title": "באיזה תחום למדת?",
+          "allowOther": true,
+          "options": [
+            { "id": "cs", "label": "מדעי המחשב", "group": "tech" },
+            { "id": "ee", "label": "הנדסת חשמל ואלקטרוניקה", "group": "tech" },
+            { "id": "is", "label": "הנדסת תוכנה / מערכות מידע", "group": "tech" },
+            { "id": "eng-other", "label": "הנדסה אחרת (מכונות, אזרחית, כימית, ביו-רפואית)", "group": "tech" },
+            { "id": "iem", "label": "הנדסת תעשייה וניהול", "group": "iem" },
+            { "id": "econ", "label": "כלכלה", "group": "business" },
+            { "id": "mgmt", "label": "מנהל עסקים / ניהול", "group": "business" },
+            { "id": "acct", "label": "חשבונאות", "group": "business" },
+            { "id": "life", "label": "מדעי החיים / ביולוגיה", "group": "science" },
+            { "id": "exact", "label": "מדעים מדויקים (מתמטיקה, פיזיקה, כימיה, סטטיסטיקה)", "group": "science" },
+            { "id": "med", "label": "רפואה וסיעוד", "group": "health" },
+            { "id": "health-pro", "label": "מקצועות בריאות (רוקחות, פיזיותרפיה, תזונה ועוד)", "group": "health" },
+            { "id": "psych", "label": "פסיכולוגיה", "group": "social" },
+            { "id": "social", "label": "מדעי החברה (סוציולוגיה, מדע המדינה, תקשורת)", "group": "social" },
+            { "id": "humanities", "label": "מדעי הרוח (היסטוריה, פילוסופיה, שפות)", "group": "social" },
+            { "id": "edu", "label": "חינוך", "group": "social" },
+            { "id": "law", "label": "משפטים", "group": "law" },
+            { "id": "arch", "label": "אדריכלות", "group": "creative" },
+            { "id": "design", "label": "עיצוב", "group": "creative" },
+            { "id": "art", "label": "אמנות", "group": "creative" }
+          ]
+        },
+        {
+          "id": "workField",
+          "type": "search",
+          "title": "באיזה תחום {אתה|את|את/ה} {עובד|עובדת|עובד/ת} היום?",
+          "allowOther": true,
+          "options": [
+            { "id": "dev", "label": "פיתוח תוכנה / הנדסה", "group": "tech" },
+            { "id": "product", "label": "ניהול מוצר", "group": "tech" },
+            { "id": "data", "label": "דאטה ובינה מלאכותית", "group": "tech" },
+            { "id": "cyber", "label": "סייבר", "group": "tech" },
+            { "id": "finance", "label": "פיננסים / בנקאות / השקעות", "group": "business" },
+            { "id": "insurance", "label": "ביטוח", "group": "business" },
+            { "id": "audit", "label": "ראיית חשבון / ביקורת", "group": "business" },
+            { "id": "consulting", "label": "ייעוץ ניהולי / אסטרטגי", "group": "business" },
+            { "id": "marketing", "label": "שיווק / מכירות / פיתוח עסקי", "group": "business" },
+            { "id": "ops", "label": "תפעול / לוגיסטיקה / שרשרת אספקה", "group": "business" },
+            { "id": "hr", "label": "משאבי אנוש", "group": "business" },
+            { "id": "industry", "label": "תעשייה / ייצור / אנרגיה", "group": "industry" },
+            { "id": "realestate", "label": "נדל\"ן / בנייה / תשתיות", "group": "industry" },
+            { "id": "health", "label": "בריאות / פארמה / ביוטק", "group": "health" },
+            { "id": "security", "label": "צבא / ביטחון (כולל שירות קבע)", "group": "public" },
+            { "id": "gov", "label": "ממשלה / רשויות", "group": "public" },
+            { "id": "ngo", "label": "עמותות / חברה אזרחית", "group": "public" },
+            { "id": "academia", "label": "חינוך / אקדמיה", "group": "public" },
+            { "id": "law", "label": "משפטים", "group": "other" },
+            { "id": "media", "label": "מדיה / תוכן / קריאייטיב", "group": "other" },
+            { "id": "self-employed", "label": "יזמות / {עצמאי|עצמאית|עצמאי/ת}", "group": "other" },
+            { "id": "none", "label": "לא {עובד|עובדת|עובד/ת} כרגע", "group": "none" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "workload",
+      "questions": [
+        {
+          "id": "workload",
+          "type": "single",
+          "title": "כמה זמן יש לך מעבר ללימודים?",
+          "allowOther": true,
+          "options": [
+            { "id": "full", "label": "{עובד|עובדת|עובד/ת} במשרה מלאה", "maxLoad": "medium" },
+            { "id": "part", "label": "{עובד|עובדת|עובד/ת} במשרה חלקית", "maxLoad": "heavy" },
+            { "id": "none", "label": "לא {עובד|עובדת|עובד/ת}", "maxLoad": "heavy" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "direction",
+      "questions": [
+        {
+          "id": "direction",
+          "type": "single",
+          "title": "לאן היית רוצה שה‑MBA ייקח אותך?",
+          "allowOther": true,
+          "options": [
+            { "id": "grow", "label": "להתקדם לתפקיד בכיר בתחום שלי", "weights": { "skills": 2, "network": 1 } },
+            { "id": "management", "label": "להתקדם לניהול", "weights": { "skills": 2, "self": 1 } },
+            { "id": "consulting", "label": "להתקדם לתפקיד ייעוץ", "weights": { "industry": 2, "network": 1 } },
+            { "id": "switch", "label": "לעבור לתחום או תעשייה אחרים", "weights": { "industry": 2, "network": 2 } },
+            { "id": "startup", "label": "להקים מיזם משלי", "weights": { "skills": 1, "industry": 1, "network": 1 } },
+            { "id": "unsure", "label": "עוד לא {יודע|יודעת|יודע/ת}, וזה בסדר", "weights": { "self": 2, "industry": 1 } }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "missing",
+      "questions": [
+        {
+          "id": "missing",
+          "type": "multi",
+          "title": "מה הכי מרגיש לך חסר עכשיו?",
+          "subtitle": "עד 2 תשובות",
+          "max": 2,
+          "allowOther": true,
+          "options": [
+            { "id": "self", "label": "אני לא {בטוח|בטוחה|בטוח/ה} מה מתאים לי ומה החוזקות שלי", "weights": { "self": 3 } },
+            { "id": "skills", "label": "יש מיומנויות שאני רוצה לחזק (ניהול, מו\"מ, הובלה וכדומה)", "weights": { "skills": 3 } },
+            { "id": "industry", "label": "אני לא {מכיר|מכירה|מכיר/ה} מספיק את התעשייה שמעניינת אותי", "weights": { "industry": 3 } },
+            { "id": "network", "label": "אין לי מספיק קשרים במקומות שמעניינים אותי", "weights": { "network": 3 } }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "freeText",
+      "optional": true,
+      "questions": [
+        {
+          "id": "freeText",
+          "type": "text",
+          "title": "במילים שלך",
+          "subtitle": "{השלם|השלימי|השלם/י} את המשפט. אפשר להתחיל מאחת ההצעות או לכתוב חופשי.",
+          "stem": "בסוף התואר הייתי רוצה ש…",
+          "placeholder": "{המשך|המשיכי|המשך/י} את המשפט כאן…",
+          "hints": [
+            "אכיר לעומק את תחום ",
+            "ארגיש {בטוח|בטוחה|בטוח/ה} יותר ב",
+            "אכיר אנשים ב",
+            "אדע מה אני רוצה לעשות אחרי התואר"
+          ]
+        }
+      ]
+    }
+  ],
+
+  "tieBreak": ["missing", "direction"],
+
+  "groupWeights": {
+    "workField": {
+      "none": { "industry": 1 }
+    }
+  },
+
+  "activities": [
+    {
+      "id": "career-center",
+      "title": "פגישת ייעוץ במרכז לניהול קריירה",
+      "description": "שיחה אישית עם יועץ/ת קריירה",
+      "domains": ["self"],
+      "load": "light",
+      "link": "mailto:collercmc@tauex.tau.ac.il",
+      "goal": "לקיים פגישת ייעוץ אחת במרכז לניהול קריירה עד סוף הסמסטר",
+      "boost": { "direction:unsure": 2 }
+    },
+    {
+      "id": "weekly-reflection",
+      "title": "רפלקציה שבועית",
+      "description": "מה למדתי, מה עניין אותי ומה ארצה ללמוד",
+      "domains": ["self"],
+      "load": "light",
+      "link": null,
+      "goal": "לכתוב רפלקציה קצרה 4 פעמים בחודש"
+    },
+    {
+      "id": "feedback",
+      "title": "בקשת משוב",
+      "description": "להעמיק במשובים ולבקש משוב מעמיתים וממרצים",
+      "domains": ["self", "skills"],
+      "load": "light",
+      "link": null,
+      "goal": "לבקש משוב מ-3 עמיתים או מרצים עד סוף הסמסטר"
+    },
+    {
+      "id": "self-letter",
+      "title": "מה אני {יודע|יודעת|יודע/ת} על עצמי היום?",
+      "description": "לזהות חוזקות, דפוסים ופערי ידע",
+      "domains": ["self"],
+      "load": "light",
+      "link": null,
+      "goal": "לכתוב את המסמך ולעדכן אותו 2 פעמים במהלך השנה"
+    },
+    {
+      "id": "course-choice",
+      "title": "בחירה מכוונת של קורסי בחירה",
+      "description": "בחירת קורסים לפי עניין, אתגר ופיתוח ידע",
+      "domains": ["self", "skills", "industry"],
+      "load": "light",
+      "link": "https://coller.tau.ac.il",
+      "goal": "לבחור 2 קורסי בחירה שמתחברים לכיוון שלי"
+    },
+    {
+      "id": "guest-lectures",
+      "title": "הרצאות אורח בקורסים",
+      "description": "להציג את עצמך, לשלוח תודה ולהתחבר בלינקדאין",
+      "domains": ["industry", "network"],
+      "load": "light",
+      "link": null,
+      "goal": "להציג את עצמי ל-3 מרצים אורחים בסמסטר",
+      "boost": { "direction:consulting": 1 }
+    },
+    {
+      "id": "clubs",
+      "title": "מועדוני סטודנטים",
+      "description": "השתתפות במפגשים עם סטודנטים ואנשי תעשייה",
+      "domains": ["industry", "network"],
+      "load": "medium",
+      "link": "https://coller.tau.ac.il/students/clubs",
+      "goal": "להשתתף ב-3 מפגשי מועדון בסמסטר",
+      "boost": { "direction:switch": 1 }
+    },
+    {
+      "id": "club-lead",
+      "title": "ניהול מועדון סטודנטים",
+      "description": "הובלת צוות וארגון פעילויות",
+      "domains": ["skills", "network"],
+      "load": "heavy",
+      "link": "https://coller.tau.ac.il/students/clubs",
+      "goal": "להצטרף להנהלת מועדון ולארגן 2 אירועים בשנה",
+      "boost": { "direction:management": 1 }
+    },
+    {
+      "id": "mentoring",
+      "title": "תוכנית מנטורינג MBA",
+      "description": "מפגשים עם מנטור/ית מהתעשייה",
+      "domains": ["industry", "network", "self"],
+      "load": "heavy",
+      "link": "https://coller.tau.ac.il/career/mentoring-MBA-program",
+      "goal": "להיפגש עם המנטור/ית 3 פעמים עד סוף הסמסטר"
+    },
+    {
+      "id": "intl-mentoring",
+      "title": "מנטורינג בינלאומי",
+      "description": "היכרות עם השוק הבינלאומי באמצעות מנטורים מארה״ב",
+      "domains": ["industry", "network"],
+      "load": "heavy",
+      "link": null,
+      "goal": "להיפגש עם המנטור/ית 3 פעמים במהלך התוכנית"
+    },
+    {
+      "id": "hurvitz",
+      "title": "המהלך האסטרטגי – מכון אלי הורוביץ",
+      "description": "השתתפות באירועים על מהלכים אסטרטגיים",
+      "domains": ["industry"],
+      "load": "light",
+      "link": "https://hurvitz-institute.sites.tau.ac.il/",
+      "goal": "להשתתף ב-2 אירועים בשנה"
+    },
+    {
+      "id": "conferences",
+      "title": "כנסים וסמינרי מחקר",
+      "description": "היכרות עם מחקרים ומגמות בתחומים שונים",
+      "domains": ["industry"],
+      "load": "light",
+      "link": null,
+      "goal": "להשתתף ב-2 כנסים או סמינרים בשנה"
+    },
+    {
+      "id": "family-business",
+      "title": "אירועי המרכז לחקר עסקים משפחתיים",
+      "description": "מפגשים עם חוקרים ובעלי עסקים משפחתיים",
+      "domains": ["industry", "network"],
+      "load": "light",
+      "link": null,
+      "goal": "להשתתף באירוע אחד בשנה"
+    },
+    {
+      "id": "classroom-networking",
+      "title": "נטוורקינג בכיתה",
+      "description": "לשבת עם אנשים חדשים ולהחליף צוותים בעבודות",
+      "domains": ["network", "skills"],
+      "load": "light",
+      "link": null,
+      "goal": "להכיר 5 סטודנטים חדשים בכל סמסטר"
+    },
+    {
+      "id": "alumni",
+      "title": "שיחות היכרות עם בוגרים",
+      "description": "ליזום שיחות עם בוגרות ובוגרים בתחומים מעניינים",
+      "domains": ["network", "industry"],
+      "load": "medium",
+      "link": null,
+      "goal": "לקיים 3 שיחות היכרות עם בוגרים בסמסטר",
+      "boost": { "direction:consulting": 1, "direction:switch": 1 }
+    },
+    {
+      "id": "linkedin",
+      "title": "נוכחות פעילה בלינקדאין",
+      "description": "שיתוף תוכן, תגובות ומעקב אחרי אנשים וארגונים",
+      "domains": ["network"],
+      "load": "light",
+      "link": "https://www.linkedin.com/company/career-management-center-coller",
+      "goal": "לשתף או להגיב על תוכן מקצועי 4 פעמים בחודש"
+    },
+    {
+      "id": "exchange",
+      "title": "חילופי סטודנטים",
+      "description": "בדיקת אוניברסיטאות שותפות והגשת מועמדות",
+      "domains": ["network", "industry", "skills", "self"],
+      "load": "heavy",
+      "link": "https://coller.tau.ac.il/EXCHANGE-HE",
+      "goal": "לבדוק 3 אוניברסיטאות שותפות ולהגיש מועמדות"
+    },
+    {
+      "id": "diversity",
+      "title": "תוכנית ניהול גיוון",
+      "description": "פיתוח מיומנויות להובלת צוותים מגוונים",
+      "domains": ["skills"],
+      "load": "heavy",
+      "link": "https://diversitytau.my.canva.site/diverse-management-by-coller-m",
+      "goal": "להשתתף ב-4 מפגשי התוכנית",
+      "boost": { "direction:management": 1 }
+    },
+    {
+      "id": "skills-courses",
+      "title": "קורסי מיומנויות",
+      "description": "קורסים במו״מ, ניהול ומיומנויות נוספות",
+      "domains": ["skills"],
+      "load": "medium",
+      "link": null,
+      "goal": "לקחת 2 קורסי מיומנויות במהלך התואר",
+      "boost": { "direction:management": 1, "direction:grow": 1 }
+    },
+    {
+      "id": "startup-coller",
+      "title": "StartUp Coller ותחרויות יזמות",
+      "description": "פיתוח רעיון בצוות והצגה מול שופטים",
+      "domains": ["skills", "industry"],
+      "load": "heavy",
+      "link": "https://coller.tau.ac.il/eventsStartUpColler",
+      "goal": "להגיש מועמדות לתחרות יזמות אחת במהלך התואר",
+      "boost": { "direction:startup": 3 }
+    },
+    {
+      "id": "debate",
+      "title": "תחרות דיבייט",
+      "description": "תרגול טיעון, חשיבה מהירה והופעה מול קהל",
+      "domains": ["skills"],
+      "load": "medium",
+      "link": null,
+      "goal": "להשתתף ב-2 תחרויות או אימונים"
+    },
+    {
+      "id": "loreal",
+      "title": "תחרות לוריאל",
+      "description": "התמודדות עם אתגר עסקי של חברה בינלאומית",
+      "domains": ["skills", "industry"],
+      "load": "heavy",
+      "link": "https://coller.tau.ac.il/news/loreal-2024",
+      "goal": "להגיש מועמדות לתחרות עסקית אחת במהלך התואר"
+    },
+    {
+      "id": "webinars",
+      "title": "וובינרים",
+      "description": "למידה מקוונת על מיומנויות ותעשיות",
+      "domains": ["skills", "industry"],
+      "load": "light",
+      "link": null,
+      "goal": "לצפות ב-3 וובינרים בסמסטר"
+    },
+    {
+      "id": "project-course",
+      "title": "קורס פרויקט",
+      "description": "עבודה בצוות על בעיה אמיתית של ארגון",
+      "domains": ["skills", "industry"],
+      "load": "medium",
+      "link": null,
+      "goal": "לקחת קורס פרויקט אחד במהלך התואר",
+      "boost": { "direction:consulting": 1 }
+    },
+    {
+      "id": "research-assistant",
+      "title": "{עוזר מחקר|עוזרת מחקר|עוזר/ת מחקר}",
+      "description": "פנייה לחברי סגל לצורך השתלבות במחקר",
+      "domains": ["skills", "industry"],
+      "load": "heavy",
+      "link": null,
+      "goal": "לפנות ל-2 חברי סגל בנוגע למשרת עוזר/ת מחקר"
+    },
+    {
+      "id": "volunteering",
+      "title": "התנדבות",
+      "description": "צבירת ניסיון, היכרות עם אנשים וזיהוי מוטיבציות",
+      "domains": ["skills", "network", "self"],
+      "load": "medium",
+      "link": null,
+      "goal": "להתנדב 4 שעות בחודש"
+    },
+    {
+      "id": "present-in-class",
+      "title": "הצגת מטלה בכיתה",
+      "description": "תרגול הצגה מול קהל וקבלת משוב",
+      "domains": ["skills"],
+      "load": "light",
+      "link": null,
+      "goal": "להציג מול הכיתה 2 פעמים בסמסטר"
+    },
+    {
+      "id": "active-participation",
+      "title": "השתתפות פעילה בקורסים",
+      "description": "שאלת שאלות, דיונים, תרגילים, סימולציות וקריאת חומרים",
+      "domains": ["skills", "industry"],
+      "load": "light",
+      "link": null,
+      "goal": "להשתתף באופן פעיל בקורסים פעם בשבוע"
+    },
+    {
+      "id": "contact-lecturer",
+      "title": "יצירת קשר עם מרצה",
+      "description": "להציג את עצמך למרצה וליזום שיחה מקצועית",
+      "domains": ["network", "industry"],
+      "load": "light",
+      "link": null,
+      "goal": "ליצור קשר עם 2 מרצים בסמסטר"
+    },
+    {
+      "id": "update-linkedin-profile",
+      "title": "עדכון פרופיל לינקדאין",
+      "description": "לציין לימודים בפקולטה ולהתחבר לאנשים שהכרתי",
+      "domains": ["network"],
+      "load": "light",
+      "link": null,
+      "goal": "לעדכן את פרופיל הלינקדאין ולהתחבר לאנשים שהכרתי בפקולטה במהלך הסמסטר"
+    },
+    {
+      "id": "follow-faculty",
+      "title": "מעקב אחר פרסומי הפקולטה",
+      "description": "לעקוב אחר מיילים, אינסטגרם ולינקדאין לאיתור פעילויות",
+      "domains": ["industry", "network"],
+      "load": "light",
+      "link": null,
+      "goal": "לעקוב אחר פרסומי הפקולטה פעם בשבוע"
+    },
+    {
+      "id": "course-reflection",
+      "title": "רפלקציה לאחר קורס",
+      "description": "לזהות ידע, מיומנויות, קשרים ותובנות שנצברו",
+      "domains": ["self", "skills"],
+      "load": "light",
+      "link": null,
+      "goal": "לכתוב רפלקציה בסיום כל קורס"
+    }
+  ]
+}
